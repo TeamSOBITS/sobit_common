@@ -29,7 +29,7 @@ add_service_files(
  wheel_ctrl.srv
  wheel_control.srv
  put_ctrl.srv
- run_ctrl.srv
+ RunCtrl.srv
 )
 
 generate_messages(
