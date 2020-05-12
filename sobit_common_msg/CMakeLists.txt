@@ -12,6 +12,11 @@ add_message_files(
  FILES
  current_state.msg
  current_state_array.msg
+ BoundingBox.msg
+ BoundingBoxes.msg
+ StringArray.msg
+ ObjectPose.msg
+ ObjectPoseArray.msg
 )
 
 add_service_files(
@@ -24,6 +29,7 @@ add_service_files(
  wheel_ctrl.srv
  wheel_control.srv
  put_ctrl.srv
+ run_ctrl.srv
 )
 
 generate_messages(

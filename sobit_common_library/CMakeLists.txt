@@ -8,6 +8,7 @@ add_compile_options(-std=c++11)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  pcl_ros
   controller_manager
   dynamixel_sdk
   hardware_interface
@@ -106,9 +107,9 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES sobit_common_library
-#  CATKIN_DEPENDS controller_manager dynamixel_sdk hardware_interface roscpp rospy sobit_common_msg
+  INCLUDE_DIRS include
+  LIBRARIES sobit_common_library_utils
+  CATKIN_DEPENDS controller_manager dynamixel_sdk hardware_interface roscpp rospy sobit_common_msg
 #  DEPENDS system_lib
 )
 
@@ -158,6 +159,15 @@ add_executable(dynamixel_servo_control src/dynamixel_servo_control.cpp
                                        src/dynamixel/dynamixel_setting.cpp)
 add_dependencies(dynamixel_servo_control ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(dynamixel_servo_control ${catkin_LIBRARIES})
+
+add_executable(object_pose_publisher src/pcl/object_pose_publisher.cpp)
+add_dependencies(object_pose_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(object_pose_publisher ${catkin_LIBRARIES})
+
+add_executable(print_test src/utils/print_test.cpp)
+add_library(sobit_common_library_utils
+                                src/utils/print.cpp
+                                src/utils/file_system.cpp)
 
 #############
 ## Install ##
