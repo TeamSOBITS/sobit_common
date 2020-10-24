@@ -186,12 +186,12 @@ void DynamixelPortControl::write(ros::Time time, ros::Duration period) {
 }
 
 void DynamixelPortControl::setTorque(uint8_t id, bool torque) {
-  uint32_t mode            = torque ? dynamixel_control::TORQUE_ENABLE : dynamixel_control::TORQUE_DISABLE;
+  uint8_t mode            = torque ? dynamixel_control::TORQUE_ENABLE : dynamixel_control::TORQUE_DISABLE;
   uint8_t  dxl_error       = 0;
   int      dxl_comm_result = packet_handler_->write1ByteTxRx(port_handler_,
                                                         id,
                                                         dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_TORQUE_ENABLE].address,
-                                                        dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_TORQUE_ENABLE].length,
+                                                        mode,
                                                         &dxl_error);
   if (dxl_comm_result != COMM_SUCCESS) {
     packet_handler_->getTxRxResult(dxl_comm_result);
@@ -281,6 +281,7 @@ void DynamixelPortControl::initializeSettingParam() {
 }
 
 bool DynamixelPortControl::startUpPosition() {
+  setTorqueAll(true);
   ros::Rate                   rate(10);
   int                         step_max = 60;
   ros::Time                   t        = getTime();
