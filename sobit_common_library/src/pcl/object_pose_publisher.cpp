@@ -46,6 +46,7 @@ class ObjPontPublisher {
   double                   min_obj_size_;
   double                   obj_grasping_hight_rate;
   double                   max_distance_to_object_;
+  double                   image_width;
 
   ros::Publisher pub_obj_poses_;
   ros::Publisher pub_object_cloud_;
@@ -83,7 +84,6 @@ class ObjPontPublisher {
 
   void callback_BBoxCloud(const sobit_common_msg::BoundingBoxesConstPtr &bbox_msg,
                           const sensor_msgs::PointCloud2ConstPtr &       cloud_msg) {
-
     std::string     frame_id = cloud_msg->header.frame_id;
     PointCloud::Ptr cloud_transform(new PointCloud());
     pcl::fromROSMsg(*cloud_msg, *cloud_transform);
@@ -108,7 +108,8 @@ class ObjPontPublisher {
       // bboxのpoint_cloudを取得
       for (int iy = bbox.ymin; iy < bbox.ymax; iy++) {
         for (int ix = bbox.xmin; ix < bbox.xmax; ix++) {
-          int    point_num = cloud_transform->width * iy + ix;
+          // int    point_num = cloud_transform->width * iy + ix;
+          int    point_num = image_width * iy + ix; // DEBUG
           cloud_bbox->points.push_back(cloud_transform->points[point_num]);
         }
       }
@@ -274,6 +275,7 @@ class ObjPontPublisher {
     nh_.param("cloud_topic_name", cloud_topic_name_, std::string("/camera/depth/points"));
     nh_.param("obj_grasping_hight_rate", obj_grasping_hight_rate, 0.6);
     nh_.param("max_distance_to_object", max_distance_to_object_, -1.0);
+    nh_.param("image_width", image_width, 1280.);
     pub_obj_poses_ = nh_.advertise<sobit_common_msg::ObjectPoseArray>("object_poses", 10);
     sub_bboxes_.reset(new message_filters::Subscriber<sobit_common_msg::BoundingBoxes>(nh_, "objects_rect", 5));
     sub_cloud_.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh_, cloud_topic_name_, 5));
