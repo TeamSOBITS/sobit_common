@@ -70,5 +70,6 @@ int main(int argc, char** argv) {
       }
     }
   }
+  dynamixel_servo_control.setTorqueAll(false);
   spinner.stop();
 }
