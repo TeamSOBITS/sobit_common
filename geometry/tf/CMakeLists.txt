@@ -31,7 +31,7 @@ include_directories(
 add_message_files(DIRECTORY msg FILES tfMessage.msg)
 add_service_files(DIRECTORY srv FILES FrameGraph.srv)
 
-generate_messages(DEPENDENCIES geometry_msgs sensor_msgs std_msgs)
+# generate_messages(DEPENDENCIES geometry_msgs sensor_msgs std_msgs)
 
 catkin_package(
   INCLUDE_DIRS include
