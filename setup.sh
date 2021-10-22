@@ -6,6 +6,8 @@ sudo apt install ros-melodic-ecl-streams -y
 sudo apt install ros-melodic-joy -y
 sudo apt install ros-melodic-joint-state-publisher* -y
 sudo cp ~/catkin_ws/src/sobit_common/turtlebot2/turtlebot_simulator/turtlebot_gazebo/libgazebo_ros_kobuki.so /opt/ros/melodic/lib
+sudo cp -f ~/catkin_ws/src/sobit_common/turtlebot2/turtlebot_simulator/turtlebot_gazebo/spawn_model /opt/ros/melodic/lib/gazebo_ros/spawn_model
+
 # 関係ない
 sudo apt install ros-melodic-pcl-*
 sudo apt install ros-melodic-openni2-*
