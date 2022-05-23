@@ -6,7 +6,6 @@ find_package(catkin REQUIRED COMPONENTS cmake_modules roscpp actionlib actionlib
 find_package(Boost REQUIRED COMPONENTS system)
 find_package(cmake_modules REQUIRED)
 find_package(Eigen REQUIRED)
-set(OpenCV_DIR /opt/opencv/opencv_3.4.2/share/OpenCV/)  
 find_package(OpenCV REQUIRED)
 
 include_directories(include ${Boost_INCLUDE_DIRS} ${catkin_INCLUDE_DIRS} ${EIGEN_INCLUDE_DIRS} ${OpenCV_INCLUDE_DIRS})
@@ -32,9 +31,9 @@ target_link_libraries(turtlebot_move_action_server ${Boost_LIBRARIES} ${catkin_L
 add_dependencies(turtlebot_move_action_server turtlebot_actions_gencpp)
 
 add_executable(find_fiducial_pose src/find_fiducial_pose.cpp src/detect_calibration_pattern.cpp)
-target_link_libraries(find_fiducial_pose ${OpenCV_LIBRARIES} ${Boost_LIBRARIES} ${catkin_LIBRARIES})
+target_link_libraries(find_fiducial_pose ${Boost_LIBRARIES} ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
 add_dependencies(find_fiducial_pose turtlebot_actions_gencpp)
- 
+
 
 # what other packages will need to use this package
 catkin_package(
