@@ -197,10 +197,9 @@ class Protocol2PacketHandler(object):
                     packet[i + PKT_INSTRUCTION - 1] == 0xFF) and (packet[i + PKT_INSTRUCTION - 2] == 0xFF):
                 # FF FF FD FD
                 packet_length_out = packet_length_out - 1
-                i += 1
-
-            packet[index] = packet[i + PKT_INSTRUCTION]
-            index += 1
+            else:
+                packet[index] = packet[i + PKT_INSTRUCTION]
+                index += 1
 
         packet[index] = packet[PKT_INSTRUCTION + packet_length_in - 2]
         packet[index + 1] = packet[PKT_INSTRUCTION + packet_length_in - 1]
@@ -384,6 +383,8 @@ class Protocol2PacketHandler(object):
         txpacket = [0] * 10
         rxpacket = []
 
+        tx_time_per_byte = (1000.0 / port.getBaudRate()) *10.0;
+
         txpacket[PKT_ID] = BROADCAST_ID
         txpacket[PKT_LENGTH_L] = 3
         txpacket[PKT_LENGTH_H] = 0
@@ -395,7 +396,8 @@ class Protocol2PacketHandler(object):
             return data_list, result
 
         # set rx timeout
-        port.setPacketTimeout(wait_length * 1)
+        #port.setPacketTimeout(wait_length * 1)
+        port.setPacketTimeoutMillis((wait_length * tx_time_per_byte) + (3.0 * MAX_ID) + 16.0);
 
         while True:
             rxpacket += port.readPort(wait_length - rx_length)

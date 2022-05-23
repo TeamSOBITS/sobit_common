@@ -2,14 +2,32 @@
 Changelog for package tf2_kdl
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.6.7 (2020-03-09)
+0.7.5 (2020-09-01)
 ------------------
 
-0.6.6 (2020-01-09)
+0.7.4 (2020-09-01)
 ------------------
+
+0.7.3 (2020-08-25)
+------------------
+
+0.7.2 (2020-06-08)
+------------------
+* fix shebang line for python3 (`#466 <https://github.com/ros/geometry2/issues/466>`_)
+* Contributors: Mikael Arguedas
+
+0.7.1 (2020-05-13)
+------------------
+* import setup from setuptools instead of distutils-core (`#449 <https://github.com/ros/geometry2/issues/449>`_)
+* Contributors: Alejandro Hernández Cordero
+
+0.7.0 (2020-03-09)
+------------------
+* Replace kdl packages with rosdep keys (`#447 <https://github.com/ros/geometry2/issues/447>`_)
+* Bump CMake version to avoid CMP0048 warning (`#445 <https://github.com/ros/geometry2/issues/445>`_)
 * Make kdl headers available (`#419 <https://github.com/ros/geometry2/issues/419>`_)
 * Fix python3 compatibility for noetic (`#416 <https://github.com/ros/geometry2/issues/416>`_)
-* Remove roslib.load_manifest `#404 <https://github.com/ros/geometry2/issues/404>`_ from otamachan/remove-load-manifest
+* Merge pull request `#404 <https://github.com/ros/geometry2/issues/404>`_ from otamachan/remove-load-manifest
 * Python 3 compatibility: relative imports and print statement
 * Contributors: Shane Loretz, Tamaki Nishino, Timon Engelke, Tully Foote
 

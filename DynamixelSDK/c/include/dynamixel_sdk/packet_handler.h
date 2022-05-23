@@ -25,6 +25,11 @@
 #include "robotis_def.h"
 #include "port_handler.h"
 
+#if defined(__APPLE__)
+#undef reboot
+#define reboot rebootDXL
+#endif
+
 #define BROADCAST_ID        0xFE    // 254
 #define MAX_ID              0xFC    // 252
 
@@ -101,7 +106,11 @@ WINDECLSPEC uint16_t    pingGetModelNum     (int port_num, int protocol_version,
 WINDECLSPEC void        broadcastPing       (int port_num, int protocol_version);
 WINDECLSPEC uint8_t     getBroadcastPingResult  (int port_num, int protocol_version, int id);
 
+#if defined(__APPLE__)
+WINDECLSPEC void        rebootDXL           (int port_num, int protocol_version, uint8_t id);
+#else
 WINDECLSPEC void        reboot              (int port_num, int protocol_version, uint8_t id);
+#endif
 
 WINDECLSPEC void        clearMultiTurn      (int port_num, int protocol_version, uint8_t id);
 

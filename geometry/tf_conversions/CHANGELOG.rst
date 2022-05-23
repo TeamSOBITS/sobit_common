@@ -2,6 +2,20 @@
 Changelog for package tf_conversions
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.13.2 (2020-06-08)
+-------------------
+
+1.13.1 (2020-05-15)
+-------------------
+* Format 2 and build_export_depend orocos kdl (`#210 <https://github.com/ros/geometry/issues/210>`_)
+* import setup from setuptools instead of distutils-core (`#209 <https://github.com/ros/geometry/issues/209>`_)
+* Contributors: Alejandro Hernández Cordero, Shane Loretz
+
+1.13.0 (2020-03-10)
+-------------------
+* Replace kdl packages with rosdep keys (`#206 <https://github.com/ros/geometry/issues/206>`_)
+* Contributors: Shane Loretz
+
 1.12.1 (2020-03-10)
 -------------------
 * Bump CMake version to avoid CMP0048 warning (`#204 <https://github.com/ros/geometry/issues/204>`_)

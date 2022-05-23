@@ -21,8 +21,8 @@
 
 from .robotis_def import *
 
-TXPACKET_MAX_LEN = 4 * 1024
-RXPACKET_MAX_LEN = 4 * 1024
+TXPACKET_MAX_LEN = 1 * 1024
+RXPACKET_MAX_LEN = 1 * 1024
 
 # for Protocol 2.0 Packet
 PKT_HEADER0 = 0
@@ -383,6 +383,8 @@ class Protocol2PacketHandler(object):
         txpacket = [0] * 10
         rxpacket = []
 
+        tx_time_per_byte = (1000.0 / port.getBaudRate()) *10.0;
+
         txpacket[PKT_ID] = BROADCAST_ID
         txpacket[PKT_LENGTH_L] = 3
         txpacket[PKT_LENGTH_H] = 0
@@ -394,7 +396,8 @@ class Protocol2PacketHandler(object):
             return data_list, result
 
         # set rx timeout
-        port.setPacketTimeout(wait_length * 1)
+        #port.setPacketTimeout(wait_length * 1)
+        port.setPacketTimeoutMillis((wait_length * tx_time_per_byte) + (3.0 * MAX_ID) + 16.0);
 
         while True:
             rxpacket += port.readPort(wait_length - rx_length)

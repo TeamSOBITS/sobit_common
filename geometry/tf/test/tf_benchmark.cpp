@@ -27,17 +27,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <ctime>
-#include <cstdlib>
 #include <gtest/gtest.h>
 #include <tf/tf.h>
+#include <sys/time.h>
 
 #include "tf/LinearMath/Vector3.h"
 
 void seed_rand()
 {
   //Seed random number generator with current microseond count
-  std::srand(std::time(0));
+  timeval temp_time_struct;
+  gettimeofday(&temp_time_struct,NULL);
+  srand(temp_time_struct.tv_usec);
 };
 
 void generate_rand_vectors(double scale, uint64_t runs, std::vector<double>& xvalues, std::vector<double>& yvalues, std::vector<double>&zvalues)
@@ -45,9 +46,9 @@ void generate_rand_vectors(double scale, uint64_t runs, std::vector<double>& xva
   seed_rand();
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
   }
 }
 
@@ -183,9 +184,9 @@ TEST(tf_benchmark, benchmarkExhaustiveSearch)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10.0 + i), "my_parent", "child");
     mTR.setTransform(tranStamped);

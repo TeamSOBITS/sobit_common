@@ -202,6 +202,7 @@ void groupSyncWriteRemoveParam(int group_num, uint8_t id)
 
   groupData[group_num].data_list[data_num].data_end = 0;
 
+  free(groupData[group_num].data_list[data_num].data);
   groupData[group_num].data_list[data_num].data = 0;
 
   groupData[group_num].data_list[data_num].id = NOT_USED_ID;
@@ -251,13 +252,22 @@ uint8_t groupSyncWriteChangeParam(int group_num, uint8_t id, uint32_t data, uint
 
 void groupSyncWriteClearParam(int group_num)
 {
+  int data_num = 0;
   int port_num = groupData[group_num].port_num;
 
   if (size(group_num) == 0)
     return;
 
+  for (data_num = 0; data_num < groupData[group_num].data_list_length; data_num++)
+  {
+    free(groupData[group_num].data_list[data_num].data);
+    groupData[group_num].data_list[data_num].data = 0;
+  }
+
+  free(groupData[group_num].data_list);
   groupData[group_num].data_list = 0;
 
+  free(packetData[port_num].data_write);
   packetData[port_num].data_write = 0;
 
   groupData[group_num].data_list_length = 0;

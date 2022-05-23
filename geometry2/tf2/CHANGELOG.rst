@@ -2,22 +2,68 @@
 Changelog for package tf2
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.6.7 (2020-03-09)
+0.7.5 (2020-09-01)
 ------------------
-* [windows][melodic] more portable fixes. (`#443 <https://github.com/ros/geometry2/issues/443>`_)
-* [Windows][melodic-devel] Fix install locations (`#442 <https://github.com/ros/geometry2/issues/442>`_)
-* Revert "rework Eigen functions namespace hack" (`#436 <https://github.com/ros/geometry2/issues/436>`_)
-* Contributors: Sean Yen, Tully Foote
+* restore buffer sizes
+* Contributors: Tully Foote
 
-0.6.6 (2020-01-09)
+0.7.4 (2020-09-01)
 ------------------
+* Fix potential buffer overrun of snprintf (`#479 <https://github.com/ros/geometry2/issues/479>`_)
+* Contributors: Atsushi Watanabe
+
+0.7.3 (2020-08-25)
+------------------
+* Use snprintf instead of stringstream to increase performance of lookupTransform() in error cases.
+* Do not waste time constructing error string if nobody is interested in it in canTransform(). (`#469 <https://github.com/ros/geometry2/issues/469>`_)
+* Output time difference of extrapolation exceptions (`#477 <https://github.com/ros/geometry2/issues/477>`_)
+* Cherry-picking various commits from Melodic (`#471 <https://github.com/ros/geometry2/issues/471>`_)
+  * Revert "rework Eigen functions namespace hack" (`#436 <https://github.com/ros/geometry2/issues/436>`_)
+  * Fixed warnings in message_filter.h (`#434 <https://github.com/ros/geometry2/issues/434>`_)
+  the variables are not used in function body and caused -Wunused-parameter to trigger with -Wall
+  * Fix ambiguous call for tf2::convert on MSVC (`#444 <https://github.com/ros/geometry2/issues/444>`_)
+  * rework ambiguous call on MSVC.
+* Contributors: Lucas Walter, Martin Pecka, Robert Haschke
+
+0.7.2 (2020-06-08)
+------------------
+
+0.7.1 (2020-05-13)
+------------------
+* Fix to improper ring_45 test, where 'anchor' frame for both inverse and normal transform was frame 'b' instead of frame 'a', thus creating a problem
+* Don't insert a TF frame is one of the same timestamp already exists, instead just overwrite it.
+* [Noetic] Add tf2::Stamped<T>::operator=() to fix warnings downstream (`#453 <https://github.com/ros/geometry2/issues/453>`_)
+  * Add tf2::Stamped<T>::operator=()
+* [noetic] cherry-pick Windows fixes from melodic-devel (`#450 <https://github.com/ros/geometry2/issues/450>`_)
+  * [Windows][melodic-devel] Fix install locations (`#442 <https://github.com/ros/geometry2/issues/442>`_)
+  * fixed install locations of tf2
+  * [windows][melodic] more portable fixes. (`#443 <https://github.com/ros/geometry2/issues/443>`_)
+  * more portable fixes.
+* Contributors: Patrick Beeson, Robert Haschke, Sean Yen, Shane Loretz
+
+0.7.0 (2020-03-09)
+------------------
+* Bump CMake version to avoid CMP0048 warning (`#445 <https://github.com/ros/geometry2/issues/445>`_)
+  Signed-off-by: Shane Loretz <sloretz@osrfoundation.org>
 * Fix compile error missing ros/ros.h (`#400 <https://github.com/ros/geometry2/issues/400>`_)
   * ros/ros.h -> ros/time.h
+  tf2 package depends on rostime
+  * tf2_bullet doesn't need ros.h
+  Signed-off-by: Shane Loretz <sloretz@osrfoundation.org>
   * tf2_eigen doesn't need ros/ros.h
-* rework Eigen functions namespace hack
+  Signed-off-by: Shane Loretz <sloretz@osrfoundation.org>
+* Merge pull request `#367 <https://github.com/ros/geometry2/issues/367>`_ from kejxu/add_tf2_namespace_to_avoid_name_collision
+  rework Eigen functions namespace hack
 * separate transform function declarations into transform_functions.h
 * use ROS_DEPRECATED macro for portability (`#362 <https://github.com/ros/geometry2/issues/362>`_)
+  * use ROS_DEPRECATED for better portability
+  * change ROS_DEPRECATED position (`#5 <https://github.com/ros/geometry2/issues/5>`_)
 * Remove `signals` from find_package(Boost COMPONENTS ...).
+  tf2 is using signals2, which is not the same library.
+  Additionally, signals2 has always been header only, and header only
+  libraries must not be listed in find_package.
+  Boost 1.69 removed the old signals library entirely, so the otherwise
+  useless `COMPONENTS signals` actually breaks the build.
 * Remove legacy inclusion in CMakeLists of tf2.
 * Contributors: James Xu, Maarten de Vries, Marco Tranzatto, Shane Loretz, Tully Foote
 

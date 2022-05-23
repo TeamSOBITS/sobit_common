@@ -1,9 +1,16 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(tf)
 
-# Melodic default to C++14
-if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+include(CheckCXXCompilerFlag)
+unset(COMPILER_SUPPORTS_CXX11 CACHE)
+if(MSVC)
+  # https://docs.microsoft.com/en-us/cpp/build/reference/std-specify-language-standard-version
+  # MSVC has c++14 enabled by default, no need to specify c++11
+else()
+  check_cxx_compiler_flag(-std=c++11 COMPILER_SUPPORTS_CXX11)
+  if(COMPILER_SUPPORTS_CXX11)
+    add_compile_options(-std=c++11)
+  endif()
 endif()
 
 find_package(catkin REQUIRED COMPONENTS
@@ -31,7 +38,7 @@ include_directories(
 add_message_files(DIRECTORY msg FILES tfMessage.msg)
 add_service_files(DIRECTORY srv FILES FrameGraph.srv)
 
-# generate_messages(DEPENDENCIES geometry_msgs sensor_msgs std_msgs)
+generate_messages(DEPENDENCIES geometry_msgs sensor_msgs std_msgs)
 
 catkin_package(
   INCLUDE_DIRS include
@@ -141,7 +148,7 @@ install(TARGETS tf_echo tf_empty_listener tf_change_notifier tf_monitor static_t
 )
 
 # Install rosrun-able scripts
-install(PROGRAMS
+catkin_install_python(PROGRAMS
   scripts/bullet_migration_sed.py
   scripts/tf_remap
   scripts/view_frames

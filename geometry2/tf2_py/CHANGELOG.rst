@@ -2,18 +2,39 @@
 Changelog for package tf2_py
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.6.7 (2020-03-09)
+0.7.5 (2020-09-01)
 ------------------
-* [Windows][melodic-devel] Fix install locations (`#442 <https://github.com/ros/geometry2/issues/442>`_)
+
+0.7.4 (2020-09-01)
+------------------
+
+0.7.3 (2020-08-25)
+------------------
+* avoid name collision b/t tf2_py and tf2 (`#478 <https://github.com/ros/geometry2/issues/478>`_)
 * Contributors: Sean Yen
 
-0.6.6 (2020-01-09)
+0.7.2 (2020-06-08)
 ------------------
-* use .pyd instead of .so on Windows and export symbols `#363 <https://github.com/ros/geometry2/issues/363>`_ from kejxu/fix_tf2_py_export
+
+0.7.1 (2020-05-13)
+------------------
+* [noetic] cherry-pick Windows fixes from melodic-devel (`#450 <https://github.com/ros/geometry2/issues/450>`_)
+  * [Windows][melodic-devel] Fix install locations (`#442 <https://github.com/ros/geometry2/issues/442>`_)
+  * fixed install locations of tf2
+  * [windows][melodic] more portable fixes. (`#443 <https://github.com/ros/geometry2/issues/443>`_)
+  * more portable fixes.
+* import setup from setuptools instead of distutils-core (`#449 <https://github.com/ros/geometry2/issues/449>`_)
+* Contributors: Alejandro Hernández Cordero, Sean Yen
+
+0.7.0 (2020-03-09)
+------------------
+* Bump CMake version to avoid CMP0048 warning (`#445 <https://github.com/ros/geometry2/issues/445>`_)
+* Merge pull request `#363 <https://github.com/ros/geometry2/issues/363>`_ from kejxu/fix_tf2_py_export
+  use .pyd instead of .so on Windows and export symbols
 * limit MSVC-only change to MSVC scope (`#10 <https://github.com/ros/geometry2/issues/10>`_)
 * Fix the pyd extension and export the init function.
 * use windows counterpart for .so extension
-* Contributors: James Xu, Sean Yen, Tully Foote
+* Contributors: James Xu, Sean Yen, Shane Loretz, Tully Foote
 
 0.6.5 (2018-11-16)
 ------------------

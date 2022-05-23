@@ -2,28 +2,59 @@
 Changelog for package tf2_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.6.7 (2020-03-09)
+0.7.5 (2020-09-01)
 ------------------
-* [windows][melodic] more portable fixes. (`#443 <https://github.com/ros/geometry2/issues/443>`_)
-* [Windows][melodic-devel] Fix install locations (`#442 <https://github.com/ros/geometry2/issues/442>`_)
-* Fixed warnings in message_filter.h (`#434 <https://github.com/ros/geometry2/issues/434>`_)
-  the variables are not used in function body and caused -Wunused-parameter to trigger with -Wall
-* Contributors: Sean Yen, moooeeeep
 
-0.6.6 (2020-01-09)
+0.7.4 (2020-09-01)
 ------------------
-* Remove roslib.load_manifest `#404 <https://github.com/ros/geometry2/issues/404>`_
-* Fix message filter `#402 <https://github.com/ros/geometry2/issues/402>`_
+
+0.7.3 (2020-08-25)
+------------------
+* Use correct frame service name in docstrings. (`#476 <https://github.com/ros/geometry2/issues/476>`_)
+  Replaces the deprecated names
+  {tf_frames, view_frames} -> tf2_frames
+* Cherry-picking various commits from Melodic (`#471 <https://github.com/ros/geometry2/issues/471>`_)
+  * Revert "rework Eigen functions namespace hack" (`#436 <https://github.com/ros/geometry2/issues/436>`_)
+  * Fixed warnings in message_filter.h (`#434 <https://github.com/ros/geometry2/issues/434>`_)
+  the variables are not used in function body and caused -Wunused-parameter to trigger with -Wall
+  * Fix ambiguous call for tf2::convert on MSVC (`#444 <https://github.com/ros/geometry2/issues/444>`_)
+  * rework ambiguous call on MSVC.
+* Contributors: Michael Grupp, Robert Haschke
+
+0.7.2 (2020-06-08)
+------------------
+
+0.7.1 (2020-05-13)
+------------------
+* StatisTransformBroadcaster: simplify/modernize code
+* [noetic] cherry-pick Windows fixes from melodic-devel (`#450 <https://github.com/ros/geometry2/issues/450>`_)
+  * [Windows][melodic-devel] Fix install locations (`#442 <https://github.com/ros/geometry2/issues/442>`_)
+  * fixed install locations of tf2
+  * [windows][melodic] more portable fixes. (`#443 <https://github.com/ros/geometry2/issues/443>`_)
+  * more portable fixes.
+* import setup from setuptools instead of distutils-core (`#449 <https://github.com/ros/geometry2/issues/449>`_)
+* Contributors: Alejandro Hernández Cordero, Robert Haschke, Sean Yen
+
+0.7.0 (2020-03-09)
+------------------
+* Bump CMake version to avoid CMP0048 warning (`#445 <https://github.com/ros/geometry2/issues/445>`_)
+* Add arguments to TransformListener constructors that accept TransportHints for the tf topic subscriber (`#438 <https://github.com/ros/geometry2/issues/438>`_)
+* Merge pull request `#404 <https://github.com/ros/geometry2/issues/404>`_ from otamachan/remove-load-manifest
+  Remove roslib.load_manifest
+* Merge pull request `#402 <https://github.com/ros/geometry2/issues/402>`_ from rhaschke/fix-message-filter
+  Fix message filter
 * resolve virtual function call in destructor
 * remove pending callbacks in clear()
-* spelling fix: seperate -> separate `#372 <https://github.com/ros/geometry2/issues/372>`_
-* Fix dangling iterator references in buffer_server.cpp `#369 <https://github.com/ros/geometry2/issues/369>`_
-* Remove some useless code from buffer_server_main.cpp `#368 <https://github.com/ros/geometry2/issues/368>`_
+* Merge pull request `#372 <https://github.com/ros/geometry2/issues/372>`_ from lucasw/patch-1
+  spelling fix: seperate -> separate
+* Merge pull request `#369 <https://github.com/ros/geometry2/issues/369>`_ from magazino/fix-dangling-reference
+* Fix dangling iterator references in buffer_server.cpp
+* Remove some useless code from buffer_server_main.cpp (`#368 <https://github.com/ros/geometry2/issues/368>`_)
 * Mark check_frequency as deprecated in docstring.
 * Follow `#337 <https://github.com/ros/geometry2/issues/337>`_: use actionlib API in BufferClient::processGoal()
-* Test for equality to None with 'is' instead of '==' `#355 <https://github.com/ros/geometry2/issues/355>`_
+* Test for equality to None with 'is' instead of '==' (`#355 <https://github.com/ros/geometry2/issues/355>`_)
 * added parameter to advertise tf2-frames as a service, if needed
-* Contributors: Daniel Ingram, Emre Sahin, JonasTietz, Lucas Walter, Michael Grupp, Robert Haschke, Tamaki Nishino, Tully Foote
+* Contributors: Daniel Ingram, Emre Sahin, JonasTietz, Lucas Walter, Michael Grupp, Robert Haschke, Shane Loretz, Tamaki Nishino, Tully Foote, toliver
 
 0.6.5 (2018-11-16)
 ------------------

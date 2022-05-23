@@ -2,18 +2,38 @@
 Changelog for package tf2_eigen
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.6.7 (2020-03-09)
+0.7.5 (2020-09-01)
 ------------------
-* Revert "rework Eigen functions namespace hack" (`#436 <https://github.com/ros/geometry2/issues/436>`_)
-* Contributors: Tully Foote
 
-0.6.6 (2020-01-09)
+0.7.4 (2020-09-01)
 ------------------
+
+0.7.3 (2020-08-25)
+------------------
+* Cherry-picking various commits from Melodic (`#471 <https://github.com/ros/geometry2/issues/471>`_)
+  * Revert "rework Eigen functions namespace hack" (`#436 <https://github.com/ros/geometry2/issues/436>`_)
+  * Fixed warnings in message_filter.h (`#434 <https://github.com/ros/geometry2/issues/434>`_)
+  the variables are not used in function body and caused -Wunused-parameter to trigger with -Wall
+  * Fix ambiguous call for tf2::convert on MSVC (`#444 <https://github.com/ros/geometry2/issues/444>`_)
+  * rework ambiguous call on MSVC.
+* Contributors: Robert Haschke
+
+0.7.2 (2020-06-08)
+------------------
+
+0.7.1 (2020-05-13)
+------------------
+* malcolm: add depends tf2 to catkin_package (`#428 <https://github.com/ros/geometry2/issues/428>`_)
+* Contributors: Malcolm Mielle
+
+0.7.0 (2020-03-09)
+------------------
+* Bump CMake version to avoid CMP0048 warning (`#445 <https://github.com/ros/geometry2/issues/445>`_)
 * Fix compile error missing ros/ros.h (`#400 <https://github.com/ros/geometry2/issues/400>`_)
   * ros/ros.h -> ros/time.h
   * tf2_bullet doesn't need ros.h
   * tf2_eigen doesn't need ros/ros.h
-* rework Eigen functions namespace hack
+* Merge pull request `#367 <https://github.com/ros/geometry2/issues/367>`_ from kejxu/add_tf2_namespace_to_avoid_name_collision
 * separate transform function declarations into transform_functions.h
 * Contributors: James Xu, Shane Loretz, Tully Foote
 

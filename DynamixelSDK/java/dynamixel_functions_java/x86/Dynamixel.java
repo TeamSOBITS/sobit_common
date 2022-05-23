@@ -167,7 +167,7 @@ interface LibFunction extends Library
 
 public class Dynamixel
 {
-  LibFunction libFunction = (LibFunction)Native.loadLibrary("dxl_x64_c", LibFunction.class);
+  LibFunction libFunction = (LibFunction)Native.loadLibrary("dxl_x86_c", LibFunction.class);
 
   // PortHandler functions
   public int portHandler(String str)

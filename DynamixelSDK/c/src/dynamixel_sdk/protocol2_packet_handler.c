@@ -577,6 +577,8 @@ void broadcastPing2(int port_num)
   uint16_t rx_length = 0;
   uint16_t wait_length = STATUS_LENGTH * MAX_ID;
 
+  double tx_time_per_byte = (1000.0 / (double)getBaudRate(port_num)) * 10.0;
+
   packetData[port_num].broadcast_ping_id_list = (uint8_t *)calloc(255, sizeof(uint8_t));
   if (packetData[port_num].broadcast_ping_id_list == NULL)
   {
@@ -610,7 +612,8 @@ void broadcastPing2(int port_num)
   }
 
   // set rx timeout
-  setPacketTimeout(port_num, (uint16_t)(wait_length * 30));
+  //setPacketTimeout(port_num, (uint16_t)(wait_length * 30));
+  setPacketTimeoutMSec(port_num, ((double)wait_length * tx_time_per_byte) + (3.0 * (double)MAX_ID) + 16.0);
 
   while (1)
   {
@@ -806,6 +809,8 @@ void readTx2(int port_num, uint8_t id, uint16_t address, uint16_t length)
   packetData[port_num].tx_packet[PKT_PARAMETER0 + 3] = (uint8_t)DXL_HIBYTE(length);
 
   txPacket2(port_num);
+
+  free(packetData[port_num].tx_packet);
 
   // set packet timeout
   if (packetData[port_num].communication_result == COMM_SUCCESS)

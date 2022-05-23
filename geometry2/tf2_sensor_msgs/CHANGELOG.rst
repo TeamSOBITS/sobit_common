@@ -2,14 +2,33 @@
 Changelog for package tf2_sensor_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.6.7 (2020-03-09)
+0.7.5 (2020-09-01)
 ------------------
 
-0.6.6 (2020-01-09)
+0.7.4 (2020-09-01)
 ------------------
-* Affine->Isometry `#378 <https://github.com/ros/geometry2/issues/378>`_
+
+0.7.3 (2020-08-25)
+------------------
+* Use list instead of set to make build reproducible (`#473 <https://github.com/ros/geometry2/issues/473>`_)
+* Contributors: Jochen Sprickerhof
+
+0.7.2 (2020-06-08)
+------------------
+
+0.7.1 (2020-05-13)
+------------------
+* import setup from setuptools instead of distutils-core (`#449 <https://github.com/ros/geometry2/issues/449>`_)
+* Contributors: Alejandro Hernández Cordero
+
+0.7.0 (2020-03-09)
+------------------
+* Replace kdl packages with rosdep keys (`#447 <https://github.com/ros/geometry2/issues/447>`_)
+* Bump CMake version to avoid CMP0048 warning (`#445 <https://github.com/ros/geometry2/issues/445>`_)
+* Merge pull request `#378 <https://github.com/ros/geometry2/issues/378>`_ from peci1/tf2_sensor_msgs_isometry
+  Affine->Isometry
 * Python 3 compatibility: relative imports and print statement
-* Contributors: Martin Pecka, Timon Engelke, Tully Foote
+* Contributors: Martin Pecka, Shane Loretz, Timon Engelke, Tully Foote
 
 0.6.5 (2018-11-16)
 ------------------

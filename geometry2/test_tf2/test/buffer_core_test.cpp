@@ -213,11 +213,12 @@ void setupTree(tf2::BufferCore& mBC, const std::string& mode, const ros::Time & 
         else
           ts.header.stamp = ros::Time();
 
-        ts.header.frame_id = frame_prefix + frames[i-1];
+        ts.child_frame_id = frame_prefix + frames[i];
         if (i > 1)
-          ts.child_frame_id = frame_prefix + frames[i];
+          ts.header.frame_id = frame_prefix + frames[i-1];
         else
-          ts.child_frame_id = frames[i]; // connect first frame
+          ts.header.frame_id = frames[i-1];
+
         EXPECT_TRUE(mBC.setTransform(ts, "authority"));
         if (interpolation_space > ros::Duration())
         {
@@ -1777,7 +1778,7 @@ TEST(BufferCore_transformableCallbacks, alreadyTransformable)
   t.transform.rotation.w = 1.0;
   b.setTransform(t, "me");
 
-  tf2::TransformableCallbackHandle cb_handle = b.addTransformableCallback(boost::bind(&TransformableHelper::callback, &h, _1, _2, _3, _4, _5));
+  tf2::TransformableCallbackHandle cb_handle = b.addTransformableCallback(boost::bind(&TransformableHelper::callback, &h, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4, boost::placeholders::_5));
   EXPECT_EQ(b.addTransformableRequest(cb_handle, "a", "b", ros::Time(1)), 0U);
 }
 
@@ -1785,7 +1786,7 @@ TEST(BufferCore_transformableCallbacks, waitForNewTransform)
 {
   tf2::BufferCore b;
   TransformableHelper h;
-  tf2::TransformableCallbackHandle cb_handle = b.addTransformableCallback(boost::bind(&TransformableHelper::callback, &h, _1, _2, _3, _4, _5));
+  tf2::TransformableCallbackHandle cb_handle = b.addTransformableCallback(boost::bind(&TransformableHelper::callback, &h, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4, boost::placeholders::_5));
   EXPECT_GT(b.addTransformableRequest(cb_handle, "a", "b", ros::Time(10)), 0U);
 
   geometry_msgs::TransformStamped t;
@@ -1812,7 +1813,7 @@ TEST(BufferCore_transformableCallbacks, waitForOldTransform)
 {
   tf2::BufferCore b;
   TransformableHelper h;
-  tf2::TransformableCallbackHandle cb_handle = b.addTransformableCallback(boost::bind(&TransformableHelper::callback, &h, _1, _2, _3, _4, _5));
+  tf2::TransformableCallbackHandle cb_handle = b.addTransformableCallback(boost::bind(&TransformableHelper::callback, &h, boost::placeholders::_1, boost::placeholders::_2, boost::placeholders::_3, boost::placeholders::_4, boost::placeholders::_5));
   EXPECT_GT(b.addTransformableRequest(cb_handle, "a", "b", ros::Time(1)), 0U);
 
   geometry_msgs::TransformStamped t;

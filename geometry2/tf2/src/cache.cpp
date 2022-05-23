@@ -66,9 +66,9 @@ void createExtrapolationException1(ros::Time t0, ros::Time t1, std::string* erro
 {
   if (error_str)
   {
-    std::stringstream ss;
-    ss << "Lookup would require extrapolation at time " << t0 << ", but only time " << t1 << " is in the buffer";
-    *error_str = ss.str();
+    char str[116]; // Text without formatting strings has 76, each timestamp has up to 20
+    snprintf(str, sizeof(str), "Lookup would require extrapolation at time %.09f, but only time %.09f is in the buffer", t0.toSec(), t1.toSec());
+    *error_str = str;
   }
 }
 
@@ -76,9 +76,15 @@ void createExtrapolationException2(ros::Time t0, ros::Time t1, std::string* erro
 {
   if (error_str)
   {
-    std::stringstream ss;
-    ss << "Lookup would require extrapolation into the future.  Requested time " << t0 << " but the latest data is at time " << t1;
-    *error_str = ss.str();
+    // Want this to come out positive, because this is a future extrapolation problem with t0
+    // t0 needs to come first because it will be bigger than t1
+    ros::Duration tdiff = t0 - t1;
+    char str[163]; // Text without formatting strings has 102, each timestamp has up to 20
+    snprintf(
+        str, sizeof(str),
+        "Lookup would require extrapolation %.09fs into the future.  Requested time %.09f but the latest data is at time %.09f",
+        tdiff.toSec(), t0.toSec(), t1.toSec());
+    *error_str = str;
   }
 }
 
@@ -86,9 +92,13 @@ void createExtrapolationException3(ros::Time t0, ros::Time t1, std::string* erro
 {
   if (error_str)
   {
-    std::stringstream ss;
-    ss << "Lookup would require extrapolation into the past.  Requested time " << t0 << " but the earliest data is at time " << t1;
-    *error_str = ss.str();
+    ros::Duration tdiff = t1 - t0;
+    char str[163]; // Text without formatting strings has 102, each timestamp has up to 20
+    snprintf(
+        str, sizeof(str),
+        "Lookup would require extrapolation %.09fs into the past.  Requested time %.09f but the earliest data is at time %.09f",
+        tdiff.toSec(), t0.toSec(), t1.toSec());
+    *error_str = str;
   }
 }
 } // namespace cache
@@ -242,7 +252,7 @@ CompactFrameID TimeCache::getParent(ros::Time time, std::string* error_str)
   return p_temp_1->frame_id_;
 }
 
-bool TimeCache::insertData(const TransformStorage& new_data)
+bool TimeCache::insertData(const TransformStorage& new_data, std::string* error_str)
 {
   L_TransformStorage::iterator storage_it = storage_.begin();
 
@@ -250,6 +260,10 @@ bool TimeCache::insertData(const TransformStorage& new_data)
   {
     if (storage_it->stamp_ > new_data.stamp_ + max_storage_time_)
     {
+      if (error_str)
+      {
+        *error_str = "TF_OLD_DATA ignoring data from the past (Possible reasons are listed at http://wiki.ros.org/tf/Errors%%20explained)";
+      }
       return false;
     }
   }
@@ -261,7 +275,18 @@ bool TimeCache::insertData(const TransformStorage& new_data)
       break;
     storage_it++;
   }
-  storage_.insert(storage_it, new_data);
+  if (storage_it != storage_.end() && storage_it->stamp_ == new_data.stamp_)
+  {
+    if (error_str)
+    {
+      *error_str = "TF_REPEATED_DATA ignoring data with redundant timestamp";
+    }
+    return false;
+  }
+  else
+  {
+    storage_.insert(storage_it, new_data);
+  }
 
   pruneList();
   return true;

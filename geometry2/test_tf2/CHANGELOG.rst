@@ -2,17 +2,44 @@
 Changelog for package test_tf2
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.6.7 (2020-03-09)
+0.7.5 (2020-09-01)
 ------------------
-* [windows][melodic] more portable fixes. (`#443 <https://github.com/ros/geometry2/issues/443>`_)
-  * more portable fixes.
-* Contributors: Sean Yen
 
-0.6.6 (2020-01-09)
+0.7.4 (2020-09-01)
 ------------------
+
+0.7.3 (2020-08-25)
+------------------
+* test_tf2: remove unused tf dependency (`#464 <https://github.com/ros/geometry2/issues/464>`_)
+* Cherry-picking various commits from Melodic (`#471 <https://github.com/ros/geometry2/issues/471>`_)
+  * Revert "rework Eigen functions namespace hack" (`#436 <https://github.com/ros/geometry2/issues/436>`_)
+  * Fixed warnings in message_filter.h (`#434 <https://github.com/ros/geometry2/issues/434>`_)
+  the variables are not used in function body and caused -Wunused-parameter to trigger with -Wall
+  * Fix ambiguous call for tf2::convert on MSVC (`#444 <https://github.com/ros/geometry2/issues/444>`_)
+  * rework ambiguous call on MSVC.
+* Contributors: Fabian Freihube, Robert Haschke
+
+0.7.2 (2020-06-08)
+------------------
+
+0.7.1 (2020-05-13)
+------------------
+* Fix to improper ring_45 test, where 'anchor' frame for both inverse and normal transform was frame 'b' instead of frame 'a', thus creating a problem
+* [noetic] cherry-pick Windows fixes from melodic-devel (`#450 <https://github.com/ros/geometry2/issues/450>`_)
+  * [Windows][melodic-devel] Fix install locations (`#442 <https://github.com/ros/geometry2/issues/442>`_)
+  * fixed install locations of tf2
+  * [windows][melodic] more portable fixes. (`#443 <https://github.com/ros/geometry2/issues/443>`_)
+  * more portable fixes.
+* Contributors: Patrick Beeson, Sean Yen
+
+0.7.0 (2020-03-09)
+------------------
+* Bump CMake version to avoid CMP0048 warning (`#445 <https://github.com/ros/geometry2/issues/445>`_)
+* Use text=True to fix Python3 incompatibility (`#446 <https://github.com/ros/geometry2/issues/446>`_)
 * Update shebang and add launch prefixes for python3 support (`#421 <https://github.com/ros/geometry2/issues/421>`_)
 * Always call catkin_package() (`#418 <https://github.com/ros/geometry2/issues/418>`_)
-* Remove roslib.load_manifest `#404 <https://github.com/ros/geometry2/issues/404>`_ from otamachan/remove-load-manifest
+* Merge pull request `#404 <https://github.com/ros/geometry2/issues/404>`_ from otamachan/remove-load-manifest
+* Remove roslib.load_manifest
 * Contributors: Shane Loretz, Tamaki Nishino, Tully Foote
 
 0.6.5 (2018-11-16)

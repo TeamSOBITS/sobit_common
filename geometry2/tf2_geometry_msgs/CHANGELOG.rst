@@ -2,15 +2,35 @@
 Changelog for package tf2_geometry_msgs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-0.6.7 (2020-03-09)
+0.7.5 (2020-09-01)
 ------------------
 
-0.6.6 (2020-01-09)
+0.7.4 (2020-09-01)
 ------------------
+
+0.7.3 (2020-08-25)
+------------------
+* Use list instead of set to make build reproducible (`#473 <https://github.com/ros/geometry2/issues/473>`_)
+* Contributors: Jochen Sprickerhof
+
+0.7.2 (2020-06-08)
+------------------
+
+0.7.1 (2020-05-13)
+------------------
+* import setup from setuptools instead of distutils-core (`#449 <https://github.com/ros/geometry2/issues/449>`_)
+* Contributors: Alejandro Hernández Cordero
+
+0.7.0 (2020-03-09)
+------------------
+* Replace kdl packages with rosdep keys (`#447 <https://github.com/ros/geometry2/issues/447>`_)
+* Bump CMake version to avoid CMP0048 warning (`#445 <https://github.com/ros/geometry2/issues/445>`_)
 * Make kdl headers available (`#419 <https://github.com/ros/geometry2/issues/419>`_)
-* Fix python3 compatibility for noetic (`#416 <https://github.com/ros/geometry2/issues/416>`_)
+* FIx python3 compatibility for noetic (`#416 <https://github.com/ros/geometry2/issues/416>`_)
 * add <array> from STL (`#366 <https://github.com/ros/geometry2/issues/366>`_)
 * use ROS_DEPRECATED macro for portability (`#362 <https://github.com/ros/geometry2/issues/362>`_)
+  * use ROS_DEPRECATED for better portability
+  * change ROS_DEPRECATED position (`#5 <https://github.com/ros/geometry2/issues/5>`_)
 * Contributors: James Xu, Shane Loretz, Tully Foote
 
 0.6.5 (2018-11-16)

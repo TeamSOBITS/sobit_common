@@ -27,11 +27,9 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <ctime>
-#include <cstdlib>
-#include <cmath>
 #include <gtest/gtest.h>
 #include <tf/tf.h>
+#include <sys/time.h>
 #include <ros/ros.h>
 #include "tf/LinearMath/Vector3.h"
 
@@ -43,7 +41,9 @@ using namespace tf;
 void seed_rand()
 {
   //Seed random number generator with current microseond count
-  std::srand(std::time(0));
+  timeval temp_time_struct;
+  gettimeofday(&temp_time_struct,NULL);
+  srand(temp_time_struct.tv_usec);
 }
 
 void generate_rand_vectors(double scale, uint64_t runs, std::vector<double>& xvalues, std::vector<double>& yvalues, std::vector<double>&zvalues)
@@ -51,9 +51,9 @@ void generate_rand_vectors(double scale, uint64_t runs, std::vector<double>& xva
   seed_rand();
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
   }
 }
 
@@ -217,11 +217,11 @@ void setupTree(tf::Transformer& mTR, const std::string& mode, const ros::Time & 
           else
             ts.stamp_ = ros::Time();
 
-          ts.frame_id_ = frame_prefix + frames[i-1];
+          ts.child_frame_id_ = frame_prefix + frames[i];
           if (i > 1)
-            ts.child_frame_id_ = frame_prefix + frames[i];
+            ts.frame_id_ = frame_prefix + frames[i-1];
           else
-            ts.child_frame_id_ = frames[i]; // connect first frame
+            ts.frame_id_ = frames[i-1]; // connect first frame
           
           EXPECT_TRUE(mTR.setTransform(ts, "authority"));
           if (interpolation_space > ros::Duration())
@@ -755,7 +755,7 @@ TEST(tf, setTransformNoInsertWithNan)
   StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(0,0,0)), ros::Time().fromNSec(10.0), "same_frame", "other_frame");
   EXPECT_TRUE(mTR.setTransform(tranStamped));
 
-  tranStamped.setOrigin(tf::Point(1.0,1.0,NAN));
+  tranStamped.setOrigin(tf::Point(1.0,1.0,0.0/0.0));
   EXPECT_TRUE(std::isnan(tranStamped.getOrigin().z()));
   EXPECT_FALSE(mTR.setTransform(tranStamped));
 
@@ -785,9 +785,9 @@ TEST(tf, TransformTransformsCartesian)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10.0 + i), "my_parent", "child");
     mTR.setTransform(tranStamped);
@@ -841,12 +841,12 @@ TEST(tf, TransformTransformToOwnFrame)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs), yawvalues(runs),  pitchvalues(runs),  rollvalues(runs);
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yawvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    pitchvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    rollvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yawvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    pitchvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    rollvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     tf::Quaternion qt;
     qt.setRPY(yawvalues[i],pitchvalues[i],rollvalues[i]);
@@ -910,9 +910,9 @@ TEST(tf, TransformPointCartesian)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10 + i), "my_parent", "child");
     mTR.setTransform(tranStamped);
@@ -925,9 +925,9 @@ TEST(tf, TransformPointCartesian)
   for ( uint64_t i = 0; i < runs ; i++ )
 
   {
-    double x =10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    double y =10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    double z =10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    double x =10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    double y =10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    double z =10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
     Stamped<Point> invec (tf::Vector3(x,y,z), ros::Time().fromNSec(10 + i), "child");
 
     try{
@@ -958,9 +958,9 @@ TEST(tf, TransformVectorCartesian)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10 + i), "my_parent", "child");
     mTR.setTransform(tranStamped);
@@ -973,9 +973,9 @@ TEST(tf, TransformVectorCartesian)
   for ( uint64_t i = 0; i < runs ; i++ )
 
   {
-    double x =10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    double y =10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    double z =10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    double x =10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    double y =10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    double z =10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
     Stamped<Point> invec (tf::Vector3(x,y,z), ros::Time().fromNSec(10 + i), "child");
 
     try{
@@ -1006,9 +1006,9 @@ TEST(tf, TransformQuaternionCartesian)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 1.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 1.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10 + i), "my_parent", "child");
@@ -1215,9 +1215,9 @@ TEST(tf, ListOneInverse)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10 + i),  "my_parent", "child");
     mTR.setTransform(tranStamped);
@@ -1259,9 +1259,9 @@ TEST(tf, ListTwoInverse)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( unsigned int i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10 + i),  "my_parent", "child");
     mTR.setTransform(tranStamped);
@@ -1306,9 +1306,9 @@ TEST(tf, ListOneForward)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( uint64_t i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10 + i),  "my_parent", "child");
     mTR.setTransform(tranStamped);
@@ -1350,9 +1350,9 @@ TEST(tf, ListTwoForward)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( unsigned int i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10 + i),  "my_parent", "child");
     mTR.setTransform(tranStamped);
@@ -1396,9 +1396,9 @@ TEST(tf, TransformThrougRoot)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( unsigned int i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(1000 + i*100),  "my_parent", "childA");
     mTR.setTransform(tranStamped);
@@ -1442,9 +1442,9 @@ TEST(tf, TransformThroughNO_PARENT)
   std::vector<double> xvalues(runs), yvalues(runs), zvalues(runs);
   for ( unsigned int i = 0; i < runs ; i++ )
   {
-    xvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    yvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
-    zvalues[i] = 10.0 * ((double) std::rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    xvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    yvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
+    zvalues[i] = 10.0 * ((double) rand() - (double)RAND_MAX /2.0) /(double)RAND_MAX;
 
     StampedTransform tranStamped(tf::Transform(tf::Quaternion(0,0,0,1), tf::Vector3(xvalues[i],yvalues[i],zvalues[i])), ros::Time().fromNSec(10 + i),  "my_parentA", "childA");
     mTR.setTransform(tranStamped);
@@ -2392,7 +2392,7 @@ TEST(tf, assertQuaternionValid)
 
   // check NaNs
   q.setValue(1,0,0,0);
-  q.setX(NAN);
+  q.setX(0.0/0.0);
   EXPECT_TRUE(expectInvalidQuaternion(q));
   q.setX(1.0);
 
@@ -2400,11 +2400,11 @@ TEST(tf, assertQuaternionValid)
   EXPECT_TRUE(expectInvalidQuaternion(q));
   q.setY(0.0);
 
-  q.setZ(NAN);
+  q.setZ(0.0/0.0);
   EXPECT_TRUE(expectInvalidQuaternion(q));
   q.setZ(0.0);
 
-  q.setW(NAN);
+  q.setW(0.0/0.0);
   EXPECT_TRUE(expectInvalidQuaternion(q));
   q.setW(0.0);
 
@@ -2447,7 +2447,7 @@ TEST(tf, assertQuaternionMsgValid)
 
   // check NaNs
   q.x = 1.0; q.y = 0.0; q.z = 0.0; q.w = 0.0;
-  q.x = NAN;
+  q.x = 0.0/0.0;
   EXPECT_TRUE(expectInvalidQuaternion(q));
   q.x = 1.0;
 
@@ -2455,11 +2455,11 @@ TEST(tf, assertQuaternionMsgValid)
   EXPECT_TRUE(expectInvalidQuaternion(q));
   q.y = 0.0;
 
-  q.z = NAN;
+  q.z = 0.0/0.0;
   EXPECT_TRUE(expectInvalidQuaternion(q));
   q.z = 0.0;
 
-  q.w = NAN;
+  q.w = 0.0/0.0;
   EXPECT_TRUE(expectInvalidQuaternion(q));
   q.w = 0.0;
 

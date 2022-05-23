@@ -124,7 +124,7 @@ class CvBridge(object):
         str_msg = cmprs_img_msg.data
         buf = np.ndarray(shape=(1, len(str_msg)),
                           dtype=np.uint8, buffer=cmprs_img_msg.data)
-        im = cv2.imdecode(buf, cv2.IMREAD_ANYCOLOR)
+        im = cv2.imdecode(buf, cv2.IMREAD_UNCHANGED)
 
         if desired_encoding == "passthrough":
             return im
@@ -167,8 +167,12 @@ class CvBridge(object):
             im = np.ndarray(shape=(img_msg.height, img_msg.width),
                            dtype=dtype, buffer=img_msg.data)
         else:
-            im = np.ndarray(shape=(img_msg.height, img_msg.width, n_channels),
-                           dtype=dtype, buffer=img_msg.data)
+            if(type(img_msg.data) == str):
+                im = np.ndarray(shape=(img_msg.height, img_msg.width, n_channels),
+                               dtype=dtype, buffer=img_msg.data.encode())
+            else:
+                im = np.ndarray(shape=(img_msg.height, img_msg.width, n_channels),
+                               dtype=dtype, buffer=img_msg.data)
         # If the byt order is different between the message and the system.
         if img_msg.is_bigendian == (sys.byteorder == 'little'):
             im = im.byteswap().newbyteorder()
@@ -222,7 +226,7 @@ class CvBridge(object):
 
         return cmprs_img_msg
 
-    def cv2_to_imgmsg(self, cvim, encoding = "passthrough"):
+    def cv2_to_imgmsg(self, cvim, encoding = "passthrough", header = None):
         """
         Convert an OpenCV :cpp:type:`cv::Mat` type to a ROS sensor_msgs::Image message.
 
@@ -231,6 +235,7 @@ class CvBridge(object):
 
            * ``"passthrough"``
            * one of the standard strings in sensor_msgs/image_encodings.h
+        :param header:    A std_msgs.msg.Header message
 
         :rtype:           A sensor_msgs.msg.Image message
         :raises CvBridgeError: when the ``cvim`` has a type that is incompatible with ``encoding``
@@ -247,6 +252,8 @@ class CvBridge(object):
         img_msg = sensor_msgs.msg.Image()
         img_msg.height = cvim.shape[0]
         img_msg.width = cvim.shape[1]
+        if header is not None:
+            img_msg.header = header
         if len(cvim.shape) < 3:
             cv_type = self.dtype_with_channels_to_cvtype2(cvim.dtype, 1)
         else:

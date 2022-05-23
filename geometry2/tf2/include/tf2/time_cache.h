@@ -36,8 +36,6 @@
 
 #include <deque>
 
-#include <sstream>
-
 #include <ros/message_forward.h>
 #include <ros/time.h>
 
@@ -60,7 +58,7 @@ public:
   virtual bool getData(ros::Time time, TransformStorage & data_out, std::string* error_str = 0)=0; //returns false if data unavailable (should be thrown as lookup exception
 
   /** \brief Insert data into the cache */
-  virtual bool insertData(const TransformStorage& new_data)=0;
+  virtual bool insertData(const TransformStorage& new_data, std::string* error_str = 0)=0;
 
   /** @brief Clear the list of stored values */
   virtual void clearList()=0;
@@ -104,7 +102,7 @@ class TimeCache : public TimeCacheInterface
   /// Virtual methods
 
   virtual bool getData(ros::Time time, TransformStorage & data_out, std::string* error_str = 0);
-  virtual bool insertData(const TransformStorage& new_data);
+  virtual bool insertData(const TransformStorage& new_data, std::string* error_str = 0);
   virtual void clearList();
   virtual CompactFrameID getParent(ros::Time time, std::string* error_str);
   virtual P_TimeAndFrameID getLatestTimeAndParent();
@@ -141,7 +139,7 @@ class StaticCache : public TimeCacheInterface
   /// Virtual methods
 
   virtual bool getData(ros::Time time, TransformStorage & data_out, std::string* error_str = 0); //returns false if data unavailable (should be thrown as lookup exception
-  virtual bool insertData(const TransformStorage& new_data);
+  virtual bool insertData(const TransformStorage& new_data, std::string* error_str = 0);
   virtual void clearList();
   virtual CompactFrameID getParent(ros::Time time, std::string* error_str);
   virtual P_TimeAndFrameID getLatestTimeAndParent();

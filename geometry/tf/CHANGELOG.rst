@@ -2,6 +2,21 @@
 Changelog for package tf
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
+1.13.2 (2020-06-08)
+-------------------
+* fix shebang line for python3 (`#212 <https://github.com/ros/geometry/issues/212>`_)
+* Contributors: Mikael Arguedas
+
+1.13.1 (2020-05-15)
+-------------------
+* Fix ring45 test expectations (`#211 <https://github.com/ros/geometry/issues/211>`_)
+  Copying https://github.com/ros/geometry2/commit/04625380bdff3f3e9e860fc0e85f71674ddd1587
+* import setup from setuptools instead of distutils-core (`#209 <https://github.com/ros/geometry/issues/209>`_)
+* Contributors: Alejandro Hernández Cordero, Shane Loretz
+
+1.13.0 (2020-03-10)
+-------------------
+
 1.12.1 (2020-03-10)
 -------------------
 * Use process_time() for Python 3.8 compatibility (`#205 <https://github.com/ros/geometry/issues/205>`_)

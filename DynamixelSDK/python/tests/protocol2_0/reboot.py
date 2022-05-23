@@ -17,16 +17,20 @@
 # limitations under the License.
 ################################################################################
 
-# Author: Ryu Woon Jung (Leon)
+#*******************************************************************************
+#***********************     Reboot Example      ***********************
+#  Required Environment to run this example :
+#    - Protocol 2.0 supported DYNAMIXEL(X, P, PRO/PRO(A), MX 2.0 series)
+#    - DYNAMIXEL Starter Set (U2D2, U2D2 PHB, 12V SMPS)
+#  How to use the example :
+#    - Use the right BAUDRATE (Line 60) corresponding to your DYNAMIXEL.
+#    - Build and Run from proper architecture subdirectory.
+#    - https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/
+#    - For ARM based SBCs such as Raspberry Pi, use linux_sbc subdirectory to build and run.
+#  Author: Ryu Woon Jung (Leon)
+#  Maintainer : Zerom, Will Son
+# *******************************************************************************
 
-#
-# *********     reboot Example      *********
-#
-#
-# Available Dynamixel model on this example : All models using Protocol 2.0
-# This example is tested with a Dynamixel PRO 54-200, and USB2DYNAMIXEL
-# Be sure that Dynamixel PRO properties are already set as %% ID : 1 / Baudnum : 1 (Baudrate : 57600)
-#
 
 import os
 
@@ -48,14 +52,19 @@ else:
 
 from dynamixel_sdk import *                 # Uses Dynamixel SDK library
 
-# Protocol version
-PROTOCOL_VERSION        = 2.0               # See which protocol version is used in the Dynamixel
+# DYNAMIXEL Protocol Version (1.0 / 2.0)
+# https://emanual.robotis.com/docs/en/dxl/protocol2/
+PROTOCOL_VERSION            = 2.0
 
-# Default setting
-DXL_ID                  = 1                 # Dynamixel ID : 1
-BAUDRATE                = 57600             # Dynamixel default baudrate : 57600
-DEVICENAME              = '/dev/ttyUSB0'    # Check which port is being used on your controller
-                                            # ex) Windows: "COM1"   Linux: "/dev/ttyUSB0" Mac: "/dev/tty.usbserial-*"
+# Factory default ID of all DYNAMIXEL is 1
+DXL_ID                      = 1
+
+# Define the proper baudrate to search DYNAMIXELs. Note that XL320's baudrate is 1 M bps.
+BAUDRATE                = 57600
+
+# Use the actual port assigned to the U2D2.
+# ex) Windows: "COM*", Linux: "/dev/ttyUSB*", Mac: "/dev/tty.usbserial-*"
+DEVICENAME                  = '/dev/ttyUSB0'
 
 # Initialize PortHandler instance
 # Set the port path
