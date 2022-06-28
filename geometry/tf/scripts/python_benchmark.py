@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 # Software License Agreement (BSD License)
 #
 # Copyright (c) 2011, Willow Garage, Inc.
@@ -91,7 +92,7 @@ for t in [tf.msg.tfMessage, tf.cMsg.tfMessage]:
     assert deserel_to_string(m2) == mstr, "deserel screwed up for type %s" % repr(t)
 
     m2 = t()
-    print("deserialize only {} us each".format(1e6 * Timer(lambda: m2.deserialize(mstr)).mean())
+    print("deserialize only {} us each".format(1e6 * Timer(lambda: m2.deserialize(mstr)).mean()))
 
 sys.exit(0)
 

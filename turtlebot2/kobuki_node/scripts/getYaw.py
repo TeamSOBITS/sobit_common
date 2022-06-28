@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #AUTHOR: Younghun Ju <yhju@yujinrobot.comm>, <yhju83@gmail.com>
 
 import roslib; roslib.load_manifest('kobuki_node')
@@ -23,11 +23,11 @@ class Converter(object):
 		quat = data.orientation
 		q = [quat.x, quat.y, quat.z, quat.w]
 		roll, pitch, yaw = euler_from_quaternion(q)
-		print "angle: " + "{0:+.4f}".format(yaw) + " rad; "\
-		+ "{0:+.2f}".format(degrees(yaw)) + " deg"
-		print "rate:  " + "{0:+.2f}".format(data.angular_velocity.z) + " rad/s; "\
-		+ "{0:+.2f}".format(degrees(data.angular_velocity.z)) + " deg/s"
-		print '---'
+		print("angle: " + "{0:+.4f}".format(yaw) + " rad; "\
+		+ "{0:+.2f}".format(degrees(yaw)) + " deg")
+		print("rate:  " + "{0:+.2f}".format(data.angular_velocity.z) + " rad/s; "\
+		+ "{0:+.2f}".format(degrees(data.angular_velocity.z)) + " deg/s")
+		print('---')
 		angle = Float64()
 		angle_rate = Float64()
 		angle.data = yaw
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 	try:
 		instance = Converter()
 		print 
-		print "It prints angle and angular_velocity from Imu message of single yaw gyro."
+		print("It prints angle and angular_velocity from Imu message of single yaw gyro.")
 		print
 		rospy.spin()
 	except rospy.ROSInterruptException: pass
