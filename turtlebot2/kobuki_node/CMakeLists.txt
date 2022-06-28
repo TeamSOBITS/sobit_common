@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(kobuki_node)
 find_package(catkin REQUIRED COMPONENTS rospy roscpp nodelet pluginlib tf angles
                                         geometry_msgs sensor_msgs nav_msgs std_msgs diagnostic_updater diagnostic_msgs

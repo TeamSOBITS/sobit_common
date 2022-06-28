@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import roslib
 roslib.load_manifest('yocs_velocity_smoother')
 import rospy

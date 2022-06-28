@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(yocs_cmd_vel_mux)
 find_package(catkin REQUIRED COMPONENTS roscpp pluginlib nodelet dynamic_reconfigure geometry_msgs)
 
@@ -6,7 +6,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp pluginlib nodelet dynamic_reconfi
 find_package(PkgConfig)
 pkg_search_module(yaml-cpp REQUIRED yaml-cpp)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 if(NOT ${yaml-cpp_VERSION} VERSION_LESS "0.5")
 add_definitions(-DHAVE_NEW_YAMLCPP)
@@ -26,7 +26,7 @@ include_directories(include ${catkin_INCLUDE_DIRS} ${yaml-cpp_INCLUDE_DIRS})
 
 # Nodelet library
 add_library(${PROJECT_NAME}_nodelet src/cmd_vel_mux_nodelet.cpp src/cmd_vel_subscribers.cpp)
-add_dependencies(${PROJECT_NAME}_nodelet geometry_msgs_gencpp)
+add_dependencies(${PROJECT_NAME}_nodelet ${catkin_EXPORTED_TARGETS})
 add_dependencies(${PROJECT_NAME}_nodelet ${PROJECT_NAME}_gencfg)
 
 target_link_libraries(${PROJECT_NAME}_nodelet ${catkin_LIBRARIES} ${yaml-cpp_LIBRARIES})

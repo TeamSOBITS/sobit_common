@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #AUTHOR: Younghun Ju <yhju@yujinrobot.comm>, <yhju83@gmail.com>
 
 import roslib; roslib.load_manifest('kobuki_node')
@@ -27,13 +27,13 @@ class Converter(object):
 		vx = data.twist.twist.linear.x
 		vy = data.twist.twist.linear.y
 		yaw_rate = data.twist.twist.angular.z
-		print "pose: x: {0:+2.5f}".format(px) + ", y: {0:+2.5f}".format(py)\
+		print("pose: x: {0:+2.5f}".format(px) + ", y: {0:+2.5f}".format(py)\
 		+ ", th: {0:+.4f}".format(yaw) + " rad; "\
-		+ "{0:+.2f}".format(degrees(yaw)) + " deg"
-		print "rate: x: {0:+2.5f}".format(vx) + ", y: {0:+2.5f}".format(vy)\
+		+ "{0:+.2f}".format(degrees(yaw)) + " deg")
+		print("rate: x: {0:+2.5f}".format(vx) + ", y: {0:+2.5f}".format(vy)\
 		+ ", th: {0:+.2f}".format(yaw_rate) + " rad/s; "\
-		+ "{0:+.2f}".format(degrees(yaw_rate)) + " deg/s"
-		print '---'
+		+ "{0:+.2f}".format(degrees(yaw_rate)) + " deg/s")
+		print('---')
 		pose2d = Pose2D()
 		pose2d.x = px
 		pose2d.y = py
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 	try:
 		instance = Converter()
 		print 
-		print "It prints x, y, theta values from Odom message of mobile base."
+		print("It prints x, y, theta values from Odom message of mobile base.")
 		print
 		rospy.spin()
 	except rospy.ROSInterruptException: pass

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.0.2)
 project(kobuki_bumper2pc)
 find_package(catkin REQUIRED COMPONENTS roscpp nodelet pluginlib sensor_msgs kobuki_msgs)
 
