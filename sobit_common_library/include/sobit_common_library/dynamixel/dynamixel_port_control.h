@@ -42,7 +42,9 @@ class DynamixelPortControl : public hardware_interface::RobotHW {
   bool setCurrentLimit(uint8_t id, uint16_t current_lim);
   void setVelocityLim(uint8_t id, uint32_t vel_lim);
   void setAccelerationLim(uint8_t id, uint32_t acc_lim);
+  void setPositionPGain(uint8_t id, uint16_t p_gain);
   void setPositionIGain(uint8_t id, uint16_t i_gain);
+  void setPositionDGain(uint8_t id, uint16_t d_gain);
   void setOperationMode(uint8_t id, uint8_t mode);
   bool startUpPosition();
   void readPosition(ros::Time time, ros::Duration period);

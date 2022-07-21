@@ -9,7 +9,9 @@ DynamixelControl::DynamixelControl(std::string name,
                                    uint32_t    dxl_vel_lim,
                                    uint32_t    dxl_acc_lim,
                                    uint16_t    dxl_current_lim,
+                                   uint16_t    dxl_pos_p_gain,
                                    uint16_t    dxl_pos_i_gain,
+                                   uint16_t    dxl_pos_d_gain,
                                    double      gear_ratio) {
   name_            = name;
   id_              = dxl_id;
@@ -25,7 +27,9 @@ DynamixelControl::DynamixelControl(std::string name,
   dxl_vel_lim_     = dxl_vel_lim;
   dxl_acc_lim_     = dxl_acc_lim;
   dxl_current_lim_ = dxl_current_lim;
+  dxl_pos_p_gain_  = dxl_pos_p_gain;
   dxl_pos_i_gain_  = dxl_pos_i_gain;
+  dxl_pos_d_gain_  = dxl_pos_d_gain;
   gear_ratio_      = gear_ratio;
 }
 }  // namespace dynamixel_control
