@@ -296,9 +296,9 @@ void DynamixelPortControl::initializeSettingParam() {
   for (int i = 0; i < joint_num_; i++) {
     setAccelerationLim(joint_list_[i].getDxlId(), joint_list_[i].getDxlAccelerationLim());
     setVelocityLim(joint_list_[i].getDxlId(), joint_list_[i].getDxlVelocityLim());
-    // setPositionDGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionDGain());
-    // setPositionIGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionIGain());
-    // setPositionPGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionPGain()); // Iゲインを使用すると一定時間経過後トルクが切れる
+    setPositionDGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionDGain());
+    setPositionIGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionIGain());
+    setPositionPGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionPGain()); // Iゲインを使用すると一定時間経過後トルクが切れる
     if (joint_list_[i].getOpeMode() == dynamixel_control::OPERATING_MODE_CURR_POS) {
       // setOperationMode(joint_list_[i].getDxlId(), joint_list_[i].getOpeMode());       // Iゲインを使用すると一定時間経過後トルクが切れる
       setCurrentLimit(joint_list_[i].getDxlId(), joint_list_[i].getDxlCurrentLimit());
