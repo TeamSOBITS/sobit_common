@@ -19,9 +19,9 @@ static const std::string KEY_JOINTS_MODE     = "/mode";
 static const std::string KEY_JOINTS_VEL      = "/vel";
 static const std::string KEY_JOINTS_ACC      = "/acc";
 static const std::string KEY_JOINTS_LIM      = "/lim";
-static const std::string KEY_POSITION_P_GAIN = "/pos_p_gain";
-static const std::string KEY_POSITION_I_GAIN = "/pos_i_gain";
 static const std::string KEY_POSITION_D_GAIN = "/pos_d_gain";
+static const std::string KEY_POSITION_I_GAIN = "/pos_i_gain";
+static const std::string KEY_POSITION_P_GAIN = "/pos_p_gain";
 static const std::string KEY_GEAR_RATIO      = "/gear_ratio";
 
 typedef struct {
@@ -33,9 +33,9 @@ typedef struct {
   uint32_t    vel;
   uint32_t    acc;
   uint16_t    lim;
-  uint8_t     pos_p_gain;
-  uint8_t     pos_i_gain;
   uint8_t     pos_d_gain;
+  uint8_t     pos_i_gain;
+  uint8_t     pos_p_gain;
   double      gear_ratio;
 } DxlSettingParam;
 

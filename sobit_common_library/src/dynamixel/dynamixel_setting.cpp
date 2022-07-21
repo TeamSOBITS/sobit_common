@@ -84,9 +84,9 @@ bool DynamixelSetting::loadJointParam() {
     int         load_vel;
     int         load_acc;
     int         load_lim = 0;
-    int         load_pos_p_gain;
-    int         load_pos_i_gain;
     int         load_pos_d_gain;
+    int         load_pos_i_gain;
+    int         load_pos_p_gain;
     double      gear_ratio = 1;
     if (!nh_.getParam(key_joint_param + KEY_JOINTS_ID, load_id)) {
       ROS_ERROR("%s", (key_joint_param + KEY_JOINTS_ID).c_str());
@@ -113,16 +113,16 @@ bool DynamixelSetting::loadJointParam() {
       ROS_ERROR("Undefined %s acc func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
       return false;
     }
-    if (!nh_.getParam(key_joint_param + KEY_POSITION_P_GAIN, load_pos_p_gain)) {
-      ROS_ERROR("Undefined %s p_gain func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
+    if (!nh_.getParam(key_joint_param + KEY_POSITION_D_GAIN, load_pos_d_gain)) {
+      ROS_ERROR("Undefined %s d_gain func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
       return false;
     }
     if (!nh_.getParam(key_joint_param + KEY_POSITION_I_GAIN, load_pos_i_gain)) {
       ROS_ERROR("Undefined %s i_gain func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
       return false;
     }
-    if (!nh_.getParam(key_joint_param + KEY_POSITION_D_GAIN, load_pos_d_gain)) {
-      ROS_ERROR("Undefined %s d_gain func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
+    if (!nh_.getParam(key_joint_param + KEY_POSITION_P_GAIN, load_pos_p_gain)) {
+      ROS_ERROR("Undefined %s p_gain func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
       return false;
     }
     if (!nh_.getParam(key_joint_param + KEY_GEAR_RATIO, gear_ratio)) {
@@ -142,9 +142,9 @@ bool DynamixelSetting::loadJointParam() {
     joint_list_[i].vel        = load_vel;
     joint_list_[i].acc        = load_acc;
     joint_list_[i].lim        = load_lim;
-    joint_list_[i].pos_p_gain = load_pos_p_gain;
-    joint_list_[i].pos_i_gain = load_pos_i_gain;
     joint_list_[i].pos_d_gain = load_pos_d_gain;
+    joint_list_[i].pos_i_gain = load_pos_i_gain;
+    joint_list_[i].pos_p_gain = load_pos_p_gain;
     joint_list_[i].gear_ratio = gear_ratio;
   }
   return true;
