@@ -33,9 +33,9 @@ typedef struct {
   uint32_t    vel;
   uint32_t    acc;
   uint16_t    lim;
-  uint8_t     pos_d_gain;
-  uint8_t     pos_i_gain;
-  uint8_t     pos_p_gain;
+  uint16_t    pos_d_gain;
+  uint16_t    pos_i_gain;
+  uint16_t    pos_p_gain;
   double      gear_ratio;
 } DxlSettingParam;
 
