@@ -200,7 +200,7 @@ void DynamixelPortControl::setTorque(uint8_t id, bool torque) {
   } else if (dxl_error != 0) {
     packet_handler_->getRxPacketError(dxl_error);
   } else {
-    ROS_INFO("Dynamixel has been successfully connected.");
+    ROS_INFO("Dynamixel #%d has been successfully connected.", id);
   }
 }
 
