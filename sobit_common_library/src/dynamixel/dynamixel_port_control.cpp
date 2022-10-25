@@ -18,7 +18,9 @@ DynamixelPortControl::DynamixelPortControl(ros::NodeHandle nh, dynamixel_setting
                                              joint_list[i].vel,
                                              joint_list[i].acc,
                                              joint_list[i].lim,
+                                             joint_list[i].pos_d_gain,
                                              joint_list[i].pos_i_gain,
+                                             joint_list[i].pos_p_gain,
                                              joint_list[i].gear_ratio);
     joint_list_.push_back(work);
   }
@@ -231,10 +233,32 @@ void DynamixelPortControl::setAccelerationLim(uint8_t id, uint32_t acc_lim) {
   }
 }
 
+void DynamixelPortControl::setPositionDGain(uint8_t id, uint16_t d_gain) {
+  uint8_t dxl_error       = 0;
+  int     dxl_comm_result = packet_handler_->write2ByteTxRx(
+      port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_POSITION_D_GAIN].address, d_gain, &dxl_error);
+  if (dxl_comm_result != COMM_SUCCESS) {
+    packet_handler_->getTxRxResult(dxl_comm_result);
+  } else if (dxl_error != 0) {
+    packet_handler_->getRxPacketError(dxl_error);
+  }
+}
+
 void DynamixelPortControl::setPositionIGain(uint8_t id, uint16_t i_gain) {
   uint8_t dxl_error       = 0;
   int     dxl_comm_result = packet_handler_->write2ByteTxRx(
       port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_POSITION_I_GAIN].address, i_gain, &dxl_error);
+  if (dxl_comm_result != COMM_SUCCESS) {
+    packet_handler_->getTxRxResult(dxl_comm_result);
+  } else if (dxl_error != 0) {
+    packet_handler_->getRxPacketError(dxl_error);
+  }
+}
+
+void DynamixelPortControl::setPositionPGain(uint8_t id, uint16_t p_gain) {
+  uint8_t dxl_error       = 0;
+  int     dxl_comm_result = packet_handler_->write2ByteTxRx(
+      port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_POSITION_P_GAIN].address, p_gain, &dxl_error);
   if (dxl_comm_result != COMM_SUCCESS) {
     packet_handler_->getTxRxResult(dxl_comm_result);
   } else if (dxl_error != 0) {
@@ -272,9 +296,11 @@ void DynamixelPortControl::initializeSettingParam() {
   for (int i = 0; i < joint_num_; i++) {
     setAccelerationLim(joint_list_[i].getDxlId(), joint_list_[i].getDxlAccelerationLim());
     setVelocityLim(joint_list_[i].getDxlId(), joint_list_[i].getDxlVelocityLim());
-    //setPositionIGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionIGain()); // Iゲインを使用すると一定時間経過後トルクが切れる
+    setPositionDGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionDGain());
+    setPositionIGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionIGain());
+    setPositionPGain(joint_list_[i].getDxlId(), joint_list_[i].getDxlPositionPGain()); // Iゲインを使用すると一定時間経過後トルクが切れる
     if (joint_list_[i].getOpeMode() == dynamixel_control::OPERATING_MODE_CURR_POS) {
-      //setOperationMode(joint_list_[i].getDxlId(), joint_list_[i].getOpeMode());       // Iゲインを使用すると一定時間経過後トルクが切れる
+      // setOperationMode(joint_list_[i].getDxlId(), joint_list_[i].getOpeMode());       // Iゲインを使用すると一定時間経過後トルクが切れる
       setCurrentLimit(joint_list_[i].getDxlId(), joint_list_[i].getDxlCurrentLimit());
     }
   }

@@ -105,7 +105,9 @@ class DynamixelControl {
                    uint32_t    dxl_vel_lim,
                    uint32_t    dxl_acc_lim,
                    uint16_t    dxl_current_lim,
+                   uint16_t    dxl_pos_d_gain,
                    uint16_t    dxl_pos_i_gain,
+                   uint16_t    dxl_pos_p_gain,
                    double      gear_ratio);
   virtual ~DynamixelControl(){};
   void setJoinName(std::string set_name) { name_ = set_name; }
@@ -129,7 +131,9 @@ class DynamixelControl {
   void setDxlVelocityLim(uint32_t set_dxl_vel_lim) { dxl_vel_lim_ = set_dxl_vel_lim; }
   void setDxlAccelerationLim(uint32_t set_dxl_acc_lim) { dxl_acc_lim_ = set_dxl_acc_lim; }
   void setDxlTorqueLimit(uint16_t set_torque_lim) { dxl_current_lim_ = set_torque_lim; }
+  void setDxlPositionDGain(uint16_t set_pos_d_gain) { dxl_pos_d_gain_ = set_pos_d_gain; }
   void setDxlPositionIGain(uint16_t set_pos_i_gain) { dxl_pos_i_gain_ = set_pos_i_gain; }
+  void setDxlPositionPGain(uint16_t set_pos_p_gain) { dxl_pos_p_gain_ = set_pos_p_gain; }
   void setParam(DynamixelJointParam set_param) { param_ = set_param; }
 
   std::string                         getJointName() { return name_; }
@@ -159,7 +163,9 @@ class DynamixelControl {
   uint32_t                            getDxlVelocityLim() { return dxl_vel_lim_; }
   uint32_t                            getDxlAccelerationLim() { return dxl_acc_lim_; }
   uint16_t                            getDxlCurrentLimit() { return dxl_current_lim_; }
+  uint16_t                            getDxlPositionDGain() { return dxl_pos_d_gain_; }
   uint16_t                            getDxlPositionIGain() { return dxl_pos_i_gain_; }
+  uint16_t                            getDxlPositionPGain() { return dxl_pos_p_gain_; }
   DynamixelJointParam                 getParam() { return param_; }
 
   double   dxlPos2Rad(int32_t dxl_pos) { return (dxl_pos - center_) * ((M_PI * 2) / 4096) * (1 / gear_ratio_); }
@@ -195,7 +201,9 @@ class DynamixelControl {
   uint32_t dxl_vel_lim_;
   uint32_t dxl_acc_lim_;
   uint16_t dxl_current_lim_;
+  uint16_t dxl_pos_d_gain_;
   uint16_t dxl_pos_i_gain_;
+  uint16_t dxl_pos_p_gain_;
 
   DynamixelJointParam param_;
 };
