@@ -36,5 +36,6 @@ git clone -b noetic-devel https://github.com/TeamSOBITS/DynamixelSDK
 
 # Install TurtleBot2
 git clone https://github.com/TeamSOBITS/turtlebot2_on_noetic
-bash turtlebot2_on_noetic/install.sh
+cd turtlebot2_on_noetic
+bash install.sh
 ```
