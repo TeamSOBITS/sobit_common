@@ -25,41 +25,41 @@ static const std::string KEY_POSITION_P_GAIN = "/pos_p_gain";
 static const std::string KEY_GEAR_RATIO      = "/gear_ratio";
 
 typedef struct {
-  std::string name;
-  uint8_t     id;
-  int16_t     center;
-  double      home;
-  uint8_t     mode;
-  uint32_t    vel;
-  uint32_t    acc;
-  uint16_t    lim;
-  uint16_t    pos_d_gain;
-  uint16_t    pos_i_gain;
-  uint16_t    pos_p_gain;
-  double      gear_ratio;
+    std::string name;
+    uint8_t     id;
+    int16_t     center;
+    double      home;
+    uint8_t     mode;
+    uint32_t    vel;
+    uint32_t    acc;
+    uint16_t    lim;
+    uint16_t    pos_d_gain;
+    uint16_t    pos_i_gain;
+    uint16_t    pos_p_gain;
+    double      gear_ratio;
 } DxlSettingParam;
 
 class DynamixelSetting {
- public:
-  DynamixelSetting(ros::NodeHandle nh);
-  ~DynamixelSetting(){};
-  bool                         load();
-  std::string                  getPortName() { return port_name_; }
-  std::vector<DxlSettingParam> getDxlSettingParam() { return joint_list_; }
-  uint8_t                      getJointNum() { return joint_num_; }
-  uint32_t                     getBaudRate() { return port_baud_rate_; }
+    public:
+        DynamixelSetting(ros::NodeHandle nh);
+        ~DynamixelSetting(){};
+        bool                         load();
+        std::string                  getPortName() { return port_name_; }
+        std::vector<DxlSettingParam> getDxlSettingParam() { return joint_list_; }
+        uint8_t                      getJointNum() { return joint_num_; }
+        uint32_t                     getBaudRate() { return port_baud_rate_; }
 
- private:
-  ros::NodeHandle              nh_;
-  uint8_t                      joint_num_;
-  std::string                  port_name_;
-  uint32_t                     port_baud_rate_;
-  std::vector<DxlSettingParam> joint_list_;
+        private:
+        ros::NodeHandle              nh_;
+        uint8_t                      joint_num_;
+        std::string                  port_name_;
+        uint32_t                     port_baud_rate_;
+        std::vector<DxlSettingParam> joint_list_;
 
-  bool loadPortName();
-  bool loadBaudRate();
-  bool loadJointList();
-  bool loadJointParam();
+        bool loadPortName();
+        bool loadBaudRate();
+        bool loadJointList();
+        bool loadJointParam();
 };
 
 }  // namespace dynamixel_setting
