@@ -15,7 +15,8 @@ git clone -b noetic-devel https://github.com/TeamSOBITS/DynamixelSDK
 
 # Install TurtleBot2
 git clone https://github.com/TeamSOBITS/turtlebot2_on_noetic
-bash turtlebot2_on_noetic/install.sh
+cd turtlebot2_on_noetic
+bash install.sh
 
 # Link Kobuki library with gazebo (not necessary?)
 # sudo cp ~/catkin_ws/src/sobit_common/turtlebot2_on_noetic/turtlebot_simulator/turtlebot_gazebo/libgazebo_ros_kobuki.so /opt/ros/${ROS_DISTRO}/lib
