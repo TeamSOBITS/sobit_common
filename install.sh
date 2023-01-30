@@ -3,7 +3,7 @@
 
 echo "╔══╣ Install: SOBITS Common (STARTING) ╠══╗"
 
-
+# 必要なパッケージをダウンロードする
 sudo apt-get update
 sudo apt-get install -y \
     ros-${ROS_DISTRO}-cv-bridge \
