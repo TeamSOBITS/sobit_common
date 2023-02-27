@@ -8,6 +8,9 @@
 #include <sobit_common_msg/BoundingBoxes.h>
 #include <sobit_common_msg/ObjectPose.h>
 #include <sobit_common_msg/ObjectPoseArray.h>
+#include <sobit_common_msg/RunCtrl.h>
+
+#include <std_msgs/Bool.h>
 
 #include <geometry_msgs/Vector3Stamped.h>
 #include <geometry_msgs/Point.h>
@@ -64,7 +67,12 @@ class ObjPosePublisher {
         int                      max_clusterSize;
         double                   leaf_size;
 
-        ros::Publisher pub_obj_poses_;
+        ros::Publisher  pub_obj_poses_;
+        ros::Subscriber sub_ctr_;
+        ros::ServiceServer srv_subscriber_switch_;
+
+        bool execute_flag_;
+        // bool pub_result_flag_;
 
         std::unique_ptr<message_filters::Subscriber<sobit_common_msg::BoundingBoxes>> sub_bboxes_;
         std::unique_ptr<message_filters::Subscriber<sensor_msgs::PointCloud2>>        sub_cloud_;
@@ -102,6 +110,8 @@ class ObjPosePublisher {
         void callback_BBoxCloud(const sobit_common_msg::BoundingBoxesConstPtr &bbox_msg,
                                 const sensor_msgs::PointCloud2ConstPtr        &cloud_msg,
                                 const sensor_msgs::ImageConstPtr              &img_msg ) {
+            // if(execute_flag_ == false){	return;	}
+
             std::string     frame_id = cloud_msg->header.frame_id;
             geometry_msgs::TransformStamped transformStampedFrame_;
 
@@ -138,6 +148,7 @@ class ObjPosePublisher {
             }
             
             int width = img_raw_.cols;
+            ROS_INFO("width : %i", width);
 
             sobit_common_msg::ObjectPoseArray object_pose_array;
             object_pose_array.header = bbox_msg->header;
@@ -232,6 +243,16 @@ class ObjPosePublisher {
             pub_obj_poses_.publish(object_pose_array);
         }
 
+        // bool callbackSubscriberSwitch( sobit_common_msg::RunCtrl::Request &req, sobit_common_msg::RunCtrl::Response &res ) {
+        //     if ( req.request ) {
+        //         ROS_INFO ("[ PlaceablePoseDetection ] Turn on the PlaceablePoseDetection" );
+        //     } else {
+        //         ROS_INFO ("[ PlaceablePoseDetection ] Turn off the PlaceablePoseDetection" );
+        //     }
+        //     execute_flag_ = req.request;
+        //     res.response = true;
+        //     return true;
+        // }
 
     public:
         ObjPosePublisher() : tfListener_(tfBuffer_) {
@@ -245,6 +266,9 @@ class ObjPosePublisher {
             nh_.param("max_clusterSize", max_clusterSize, 20000);
             nh_.param("leaf_size", leaf_size, 0.005);
 
+            nh_.param("execute_flag", execute_flag_, true);
+            // nh_.param("pub_result_flag", pub_result_flag_, true);
+
             sub_bboxes_.reset(new message_filters::Subscriber<sobit_common_msg::BoundingBoxes>(nh_, "objects_rect", 5));
             sub_cloud_.reset(new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh_, cloud_topic_name_, 5));
             sub_img_.reset(new message_filters::Subscriber<sensor_msgs::Image>(nh_, img_topic_name_, 5));
@@ -252,8 +276,8 @@ class ObjPosePublisher {
             sync_.reset(new message_filters::Synchronizer<BBoxesCloudSyncPolicy>(
                 BBoxesCloudSyncPolicy(200), *sub_bboxes_, *sub_cloud_, *sub_img_));
             sync_->registerCallback(boost::bind(&ObjPosePublisher::callback_BBoxCloud, this, _1, _2, _3));
+            // srv_subscriber_switch_ = nh_.advertiseService( "run_ctr", &ObjPosePublisher::callbackSubscriberSwitch, this);
 
-            pub_obj_poses_    = nh_.advertise<sobit_common_msg::ObjectPoseArray>("object_poses", 10);
         }
 };
 
