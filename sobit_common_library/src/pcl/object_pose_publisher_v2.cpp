@@ -42,6 +42,7 @@
 
 #include <sensor_msgs/image_encodings.h>
 #include <sensor_msgs/Image.h>
+#include <std_msgs/Bool.h>
 
 #include <iostream>
 
@@ -75,6 +76,7 @@ class ObjPosePublisher {
         int                      min_clusterSize;
         int                      max_clusterSize;
         double                   leaf_size;
+        bool                     execute_flag_;
 
         ros::Publisher pub_obj_poses_;
         ros::Publisher pub_object_cloud_;
@@ -85,6 +87,8 @@ class ObjPosePublisher {
         std::unique_ptr<message_filters::Subscriber<sensor_msgs::Image>>              sub_img_;
 
         std::shared_ptr<message_filters::Synchronizer<BBoxesCloudSyncPolicy>>         sync_;
+
+        ros::Subscriber sub_ctr_;
 
         pcl::search::KdTree<PointT>::Ptr        kdtree_;             // 探索用kd木
         pcl::EuclideanClusterExtraction<PointT> euclid_clustering_;  // ポイント間の距離でクラスタリング
@@ -120,6 +124,8 @@ class ObjPosePublisher {
         void callback_BBoxCloud(const sobit_common_msg::BoundingBoxesConstPtr &bbox_msg,
                                 const sensor_msgs::PointCloud2ConstPtr        &cloud_msg,
                                 const sensor_msgs::ImageConstPtr              &img_msg ) {
+            if(execute_flag_ == false){	return;	}
+
             std::string     frame_id = cloud_msg->header.frame_id;
             geometry_msgs::TransformStamped transformStampedFrame_;
 
@@ -157,6 +163,7 @@ class ObjPosePublisher {
             }
 
             int width = img_raw_.cols;
+            // ROS_INFO("width %d", width);
 
             sobit_common_msg::ObjectPoseArray object_pose_array;
             object_pose_array.header = bbox_msg->header;
@@ -298,6 +305,7 @@ class ObjPosePublisher {
             
             pub_obj_poses_.publish(object_pose_array);
             pub_clusters_.publish(marker_array);
+            // ros::spinOnce()
         }
 
         visualization_msgs::Marker makeMarker(const std::string &    frame_id,
@@ -340,7 +348,13 @@ class ObjPosePublisher {
 
             return marker;
         }
-
+        void callbackControl( const std_msgs::Bool& msg ) {
+            // NODELET_INFO("callbackControl");
+            if ( msg.data ) std::cout << "[" << ros::this_node::getName() << "] Turn on the sensor subscriber\n" << std::endl;//オン
+            else std::cout << "[" << ros::this_node::getName() << "] Turn off the sensor subscriber\n" << std::endl;//オフ
+            execute_flag_ = msg.data;
+            return;
+        }
     public:
         ObjPosePublisher() : tfListener_(tfBuffer_) {
             nh_.param("obj_under_rate", min_obj_size_, 0.08);
@@ -351,6 +365,7 @@ class ObjPosePublisher {
             nh_.param("obj_grasping_hight_rate", obj_grasping_hight_rate, 0.6);
             nh_.param("max_distance_to_object", max_distance_to_object_, -1.0);
             nh_.param("image_width", image_width, 1024.);
+            nh_.param("execute_default", execute_flag_, true);
 
             nh_.param("cluster_tolerance", cluster_tolerance, 0.01);
             nh_.param("min_clusterSize", min_clusterSize, 100);
@@ -371,6 +386,8 @@ class ObjPosePublisher {
             sync_.reset(new message_filters::Synchronizer<BBoxesCloudSyncPolicy>(
                 BBoxesCloudSyncPolicy(200), *sub_bboxes_, *sub_cloud_, *sub_img_));
             sync_->registerCallback(boost::bind(&ObjPosePublisher::callback_BBoxCloud, this, _1, _2, _3));
+
+            sub_ctr_ = nh_.subscribe("detect_ctrl", 10, &ObjPosePublisher::callbackControl, this);
 
             pub_obj_poses_    = nh_.advertise<sobit_common_msg::ObjectPoseArray>("object_poses", 10);
             pub_object_cloud_ = nh_.advertise<PointCloud>("object_cloud", 1);
