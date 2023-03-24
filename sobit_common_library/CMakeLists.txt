@@ -4,10 +4,17 @@ project(sobit_common_library)
 ## Compile as C++14, supported in ROS Noetic and newer
 add_compile_options(-std=c++14)
 
+find_package(OpenCV 4.6.0 REQUIRED PATHS "/opt/opencv/opencv_4.6.0/")
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  tf2
+  tf2_ros
+  tf2_msgs
+  tf2_sensor_msgs
+  cv_bridge
   pcl_ros
   controller_manager
   dynamixel_sdk
@@ -163,6 +170,14 @@ target_link_libraries(dynamixel_servo_control ${catkin_LIBRARIES})
 add_executable(object_pose_publisher src/pcl/object_pose_publisher.cpp)
 add_dependencies(object_pose_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(object_pose_publisher ${catkin_LIBRARIES})
+
+add_executable(object_pose_publisher_v2 src/pcl/object_pose_publisher_v2.cpp)
+add_dependencies(object_pose_publisher_v2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(object_pose_publisher_v2 ${catkin_LIBRARIES})
+
+add_executable(object_pose_publisher_v3 src/pcl/object_pose_publisher_v3.cpp)
+add_dependencies(object_pose_publisher_v3 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(object_pose_publisher_v3 ${catkin_LIBRARIES})
 
 add_executable(print_test src/utils/print_test.cpp)
 add_library(sobit_common_library_utils
