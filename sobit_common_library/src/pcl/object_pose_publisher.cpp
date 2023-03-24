@@ -90,17 +90,17 @@ class ObjPontPublisher {
             pcl::fromROSMsg(*cloud_msg, *cloud_transform);
             
             try {
-            tf_listener_.waitForTransform(base_frame_name_, frame_id, ros::Time(0), ros::Duration(1.0));
-            pcl_ros::transformPointCloud(
-                base_frame_name_, ros::Time(0), *cloud_transform, frame_id, *cloud_transform, tf_listener_);
+                tf_listener_.waitForTransform(base_frame_name_, frame_id, ros::Time(0), ros::Duration(1.0));
+                pcl_ros::transformPointCloud(
+                    base_frame_name_, ros::Time(0), *cloud_transform, frame_id, *cloud_transform, tf_listener_);
+            
             } catch (tf::TransformException ex) {
-            ROS_ERROR("%s", ex.what());
+                ROS_ERROR("%s", ex.what());
+                return;
 
-            return;
             } catch (...) {
-            ROS_ERROR("ERROR obj_point_publisher 54 line");
-
-            return;
+                ROS_ERROR("ERROR obj_point_publisher 54 line");
+                return;
             }
 
             sobit_common_msg::ObjectPoseArray object_pose_array;
