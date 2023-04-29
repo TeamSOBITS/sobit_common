@@ -56,6 +56,23 @@ def move_gripper_to_target(target_frame_name, shift):
         rospy.logerr("Gripper_move Service call failed: %s", e)
         return False
 
+def move_gripper_to_target_for_game_controller(target_frame_name, shift):
+    """
+    グリッパーを目標のtfの位置まで移動させるサービスを呼び出す
+    Args:
+        target_frame_name : 目標のtf名
+        shift             : 目標のtfからどれだけずらすか
+    Return:
+        True or False : 成功ならTrue, 失敗ならFalse
+    """
+    rospy.wait_for_service('/robot_ctrl/gripper_move_to_target')
+    try:
+        gripper_move_to_target_for_game_controller_service = rospy.ServiceProxy('/robot_ctrl/gripper_move_to_target_for_game_controller', sobit_common_msg.srv.gripper_move)
+        res = gripper_move_to_target_for_game_controller_service(target_frame_name, shift)
+        return res.is_moved
+    except rospy.ServiceException as e:
+        rospy.logerr("Gripper_move Service call failed: %s", e)
+        return False
 
 def registered_motion(motion_type):
     """
