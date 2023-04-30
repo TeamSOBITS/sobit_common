@@ -21,10 +21,8 @@ def grasp_object(object_name, shift_x=-0.45, shift_y=0.025, shift_z=0.0, move_st
     Return:
         True or False   : 把持に成功したならTrue, 失敗ならFalseを返す
     """
-    if object_name == 'game_controller':
-        response = joint_controller.move_gripper_to_target_for_game_controller(object_name, Point(x=shift_x, y=shift_y, z=shift_z))
-    else:
-        response = joint_controller.move_gripper_to_target(object_name, Point(x=shift_x, y=shift_y, z=shift_z))
+
+    response = joint_controller.move_gripper_to_target(object_name, Point(x=shift_x, y=shift_y, z=shift_z))
     rospy.sleep(2.0)
     if response:
         joint_controller.open_gripper()
