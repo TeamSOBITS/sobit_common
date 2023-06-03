@@ -7,8 +7,9 @@ echo "╔══╣ Install: SOBITS Common (STARTING) ╠══╗"
 sudo apt-get update
 sudo apt-get install -y \
     ros-${ROS_DISTRO}-cv-bridge \
-    ros-${ROS_DISTRO}-geometry*\
-    ros-${ROS_DISTRO}-image-geometry
+    ros-${ROS_DISTRO}-geometry* \
+    ros-${ROS_DISTRO}-image-geometry \
+    ros-${ROS_DISTRO}-smach*
 
 # Install DynamixelSDK
 git clone -b noetic-devel https://github.com/TeamSOBITS/DynamixelSDK
