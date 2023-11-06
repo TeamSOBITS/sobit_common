@@ -6,7 +6,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-<!-- [![MIT License][license-shield]][license-url] -->
+[![License][license-shield]][license-url]
 
 # Repository Title
 
@@ -182,5 +182,5 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [stars-url]: https://github.com/TeamSOBITS/sobit_common/stargazers
 [issues-shield]: https://img.shields.io/github/issues/TeamSOBITS/sobit_common.svg?style=for-the-badge
 [issues-url]: https://github.com/TeamSOBITS/sobit_common/issues
-<!-- [license-shield]: https://img.shields.io/github/license/TeamSOBITS/sobit_common.svg?style=for-the-badge
-[license-url]: https://github.com/TeamSOBITS/sobit_common/blob/master/LICENSE.txt -->
+[license-shield]: https://img.shields.io/github/license/TeamSOBITS/sobit_common.svg?style=for-the-badge
+[license-url]: https://github.com/TeamSOBITS/sobit_common/blob/master/LICENSE
