@@ -1,5 +1,0 @@
-.vscode
-__pycache__
-*.pyc
-DynamixelSDK/
-turtlebot2_on_noetic/
