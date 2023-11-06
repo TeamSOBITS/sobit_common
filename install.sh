@@ -20,21 +20,23 @@ fi
 # Download and install dependencies
 sudo apt-get update
 sudo apt-get install -y \
-    ros-${ROS_DISTRO}-controller_manager \
+    ros-${ROS_DISTRO}-controller-manager \
     ros-${ROS_DISTRO}-hardware-interface \
     ros-${ROS_DISTRO}-joint-limits-interface
 
 # Install DynamixelSDK
+sudo rm -r DynamixelSDK
 git clone -b noetic-devel https://github.com/TeamSOBITS/DynamixelSDK
 
 if [[ "${MOBILE_BASE}" == "kobuki" ]]; then
     # Install TurtleBot2
+    sudo rm -r turtlebot2_on_noetic
     git clone https://github.com/TeamSOBITS/turtlebot2_on_noetic
     cd turtlebot2_on_noetic
     bash install.sh
 
     # Link Kobuki library with gazebo (not necessary?)
     # sudo cp ~/catkin_ws/src/sobit_common/turtlebot2_on_noetic/turtlebot_simulator/turtlebot_gazebo/libgazebo_ros_kobuki.so /opt/ros/${ROS_DISTRO}/lib
-
+fi
 
 echo "╚══╣ Install: SOBITS Common (FINISHED) ╠══╝"
