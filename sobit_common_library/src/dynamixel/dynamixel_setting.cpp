@@ -1,6 +1,5 @@
 #include "sobit_common_library/dynamixel/dynamixel_setting.h"
-
-#include "sobit_common_library/dynamixel/dynamixel_control.h"
+#include "sobit_common_library/dynamixel/dynamixel_joint_control.h"
 
 namespace dynamixel_setting {
 DynamixelSetting::DynamixelSetting(ros::NodeHandle nh) {

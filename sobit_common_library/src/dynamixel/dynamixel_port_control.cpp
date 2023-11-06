@@ -1,6 +1,6 @@
-#include "sobit_common_library/dynamixel/dynamixel_port_control.h"
-
 #include <iostream>
+
+#include "sobit_common_library/dynamixel/dynamixel_port_control.h"
 
 namespace dynamixel_port_control {
 DynamixelPortControl::DynamixelPortControl(ros::NodeHandle nh, dynamixel_setting::DynamixelSetting &setting) {
