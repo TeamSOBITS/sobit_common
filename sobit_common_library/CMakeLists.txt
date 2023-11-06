@@ -4,23 +4,18 @@ project(sobit_common_library)
 ## Compile as C++14, supported in ROS Noetic and newer
 add_compile_options(-std=c++14)
 
-find_package(OpenCV 4.6.0 REQUIRED PATHS "/opt/opencv/opencv_4.6.0/")
+# find_package(OpenCV 4.8.0 REQUIRED PATHS "/opt/opencv/opencv_4.8.0/")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  tf2
-  tf2_ros
-  tf2_msgs
-  tf2_sensor_msgs
-  cv_bridge
-  pcl_ros
-  controller_manager
-  dynamixel_sdk
-  hardware_interface
   roscpp
   rospy
+  dynamixel_sdk
+  controller_manager
+  hardware_interface
+  joint_limits_interface
   sobit_common_msg
 )
 
@@ -31,7 +26,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-catkin_python_setup()
+# catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -115,8 +110,7 @@ catkin_python_setup()
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES sobit_common_library_utils
-  CATKIN_DEPENDS controller_manager dynamixel_sdk hardware_interface roscpp rospy sobit_common_msg
+  CATKIN_DEPENDS roscpp rospy dynamixel_sdk controller_manager hardware_interface joint_limits_interface sobit_common_msg
 #  DEPENDS system_lib
 )
 
@@ -160,29 +154,12 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-add_executable(dynamixel_servo_control src/dynamixel_servo_control.cpp
-                                       src/dynamixel/dynamixel_control.cpp
+add_executable(dynamixel_servo_control src/dynamixel/dynamixel_servo_control.cpp
+                                       src/dynamixel/dynamixel_joint_control.cpp
                                        src/dynamixel/dynamixel_port_control.cpp
                                        src/dynamixel/dynamixel_setting.cpp)
 add_dependencies(dynamixel_servo_control ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(dynamixel_servo_control ${catkin_LIBRARIES})
-
-add_executable(object_pose_publisher src/pcl/object_pose_publisher.cpp)
-add_dependencies(object_pose_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(object_pose_publisher ${catkin_LIBRARIES})
-
-add_executable(object_pose_publisher_v2 src/pcl/object_pose_publisher_v2.cpp)
-add_dependencies(object_pose_publisher_v2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(object_pose_publisher_v2 ${catkin_LIBRARIES})
-
-add_executable(object_pose_publisher_v3 src/pcl/object_pose_publisher_v3.cpp)
-add_dependencies(object_pose_publisher_v3 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(object_pose_publisher_v3 ${catkin_LIBRARIES})
-
-add_executable(print_test src/utils/print_test.cpp)
-add_library(sobit_common_library_utils
-                                src/utils/print.cpp
-                                src/utils/file_system.cpp)
 
 #############
 ## Install ##
