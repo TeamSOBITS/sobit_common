@@ -4,16 +4,16 @@
 #include <memory>
 #include <vector>
 
+#include <ros/ros.h>
 #include <dynamixel_sdk/dynamixel_sdk.h>
 #include <hardware_interface/joint_command_interface.h>
 #include <hardware_interface/joint_state_interface.h>
 #include <hardware_interface/robot_hw.h>
 #include <joint_limits_interface/joint_limits_interface.h>
-#include <ros/ros.h>
+
 #include <sobit_common_msg/current_state.h>
 #include <sobit_common_msg/current_state_array.h>
-
-#include "sobit_common_library/dynamixel/dynamixel_control.h"
+#include "sobit_common_library/dynamixel/dynamixel_joint_control.h"
 #include "sobit_common_library/dynamixel/dynamixel_setting.h"
 
 namespace dynamixel_port_control {
