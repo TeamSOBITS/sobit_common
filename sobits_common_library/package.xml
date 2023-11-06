@@ -3,7 +3,7 @@
   href="http://download.ros.org/schema/package_format3.xsd"
   schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>sobit_common_library</name>
+  <name>sobits_common_library</name>
   <version>0.0.0</version>
   <description>
     This package allows shared configuration with SOBITS robots
@@ -25,6 +25,6 @@
   <depend>controller_manager</depend>
   <depend>joint_limits_interface</depend>
   <depend>hardware_interface</depend>
-  <depend>sobits_common_msgs</depend>
+  <depend>sobits_msgs</depend>
 
 </package>

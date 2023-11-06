@@ -11,8 +11,8 @@
 #include <hardware_interface/robot_hw.h>
 #include <joint_limits_interface/joint_limits_interface.h>
 
-#include <sobits_common_msg/current_state.h>
-#include <sobits_common_msg/current_state_array.h>
+#include <sobits_msgs/current_state.h>
+#include <sobits_msgs/current_state_array.h>
 #include "sobits_common_library/dynamixel/dynamixel_joint_control.h"
 #include "sobits_common_library/dynamixel/dynamixel_setting.h"
 

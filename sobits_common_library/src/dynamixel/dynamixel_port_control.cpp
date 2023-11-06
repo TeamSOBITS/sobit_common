@@ -4,7 +4,7 @@
 
 namespace dynamixel_port_control {
 DynamixelPortControl::DynamixelPortControl(ros::NodeHandle nh, dynamixel_setting::DynamixelSetting &setting) {
-    pub_current_ = nh.advertise<sobit_common_msg::current_state_array>("/current_state_array", 100);
+    pub_current_ = nh.advertise<sobits_msgs::current_state_array>("/current_state_array", 100);
     dxl_res_     = true;
     joint_num_   = setting.getJointNum();
 
@@ -141,7 +141,7 @@ void DynamixelPortControl::readVelocity(ros::Time time, ros::Duration period) {
 }
 
 void DynamixelPortControl::readCurrent(ros::Time time, ros::Duration period) {
-    sobit_common_msg::current_state_array current_state_array;
+    sobits_msgs::current_state_array current_state_array;
 
     for (int i = 0; i < joint_num_; i++) {
         uint8_t dxl_id             = joint_list_[i].getDxlId();
@@ -158,7 +158,7 @@ void DynamixelPortControl::readCurrent(ros::Time time, ros::Duration period) {
 
             joint_list_[i].setCurrent(current);
             joint_list_[i].setEffort(effort);
-            sobit_common_msg::current_state current_state;
+            sobits_msgs::current_state current_state;
             current_state.joint_name = joint_list_[i].getJointName();
             current_state.current_ma = joint_list_[i].getCurrent();
             current_state_array.current_state_array.push_back(current_state);

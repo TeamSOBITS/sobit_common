@@ -14,7 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   controller_manager
   hardware_interface
   joint_limits_interface
-  sobits_common_msgs
+  sobits_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -108,7 +108,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS roscpp rospy dynamixel_sdk controller_manager hardware_interface joint_limits_interface sobits_common_msgs
+  CATKIN_DEPENDS roscpp rospy dynamixel_sdk controller_manager hardware_interface joint_limits_interface sobits_msgs
 #  DEPENDS system_lib
 )
 

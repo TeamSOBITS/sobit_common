@@ -3,7 +3,7 @@
 #include <ros/ros.h>
 #include <controller_manager/controller_manager.h>
 
-#include <sobits_common_msg/current_state.h>
+#include <sobits_msgs/current_state.h>
 #include "sobits_common_library/dynamixel/dynamixel_joint_control.h"
 #include "sobits_common_library/dynamixel/dynamixel_port_control.h"
 #include "sobits_common_library/dynamixel/dynamixel_setting.h"
@@ -17,7 +17,7 @@ typedef struct {
 std::queue<CurrentRequest>                    current_request_queue;
 dynamixel_port_control::DynamixelPortControl* driver_addr;
 
-void currentCtrlCallback(const sobit_common_msg::current_state msg) {
+void currentCtrlCallback(const sobits_msgs::current_state msg) {
     std::string target_joint_name  = msg.joint_name;
     double      target_current_val = msg.current_ma;
 
