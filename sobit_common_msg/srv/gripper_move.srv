@@ -1,4 +1,0 @@
-string target_name
-geometry_msgs/Point shift
----
-bool is_moved

@@ -1,3 +1,0 @@
-# sobit_common_msg
-
-TeamSOBITSで使用する共通msg
