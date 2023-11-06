@@ -8,57 +8,57 @@
 [![Issues][issues-shield]][issues-url]
 <!-- [![MIT License][license-shield]][license-url] -->
 
-# SOBIT Common
+# Repository Title
 
-<!-- 目次 -->
+<!-- TABLE OF CONTENTS -->
 <details>
-  <summary>目次</summary>
+  <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#概要">概要</a>
+      <a href="#introduction">Introduction</a>
     </li>
     <li>
-      <a href="#環境構築">環境構築</a>
+      <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#環境条件">環境条件</a></li>
-        <li><a href="#インストール方法">インストール方法</a></li>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#実行・操作方法">実行・操作方法</a></li>
-    <li><a href="#マイルストーン">マイルストーン</a></li>
-    <li><a href="#変更履歴">変更履歴</a></li>
+    <li><a href="#launch-and-usage">Launch and Usage</a></li>
+    <li><a href="#milestone">Milestone</a></li>
     <!-- <li><a href="#contributing">Contributing</a></li> -->
     <!-- <li><a href="#license">License</a></li> -->
-    <li><a href="#参考文献">参考文献</a></li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
 
 
-<!-- レポジトリの概要 -->
-## 概要
+<!-- INTRODUCTION -->
+## Introduction
 
-SOBIT Commonのレポジトリでは、SOBITSがこれまで開発してきた実機ロボットを動かすため，共通のライブラリです．
-ロボットに搭載されているアクチュエータやセンサーなど共通で使用するリソースを統一し，ライブラリ化となったものです．
+The SOBIT Common repository is a common library for operating robots developed by SOBITS.
+In this library you will be able to collect information about the actuators and sensors mounted on these robots.
 
-SOBIT Commonが必要とされるSOBITSのロボットはこちらになります．
+The robots that require SOBIT Common are listed here.
+
 | SOBIT PRO | SOBIT EDU | SOBIT MINI |
 | :---: | :---: | :---: |
 | ![](docs/img/sobit_pro.png) | ![](docs/img/sobit_edu.png) | ![](docs/img/sobit_mini.png) | 
-| [Gitへ移動](https://github.com/TeamSOBITS/sobit_pro) | [Gitへ移動](https://github.com/TeamSOBITS/sobit_edu) | [Gitへ移動](https://github.com/TeamSOBITS/sobit_mini) |
+| [Go to Git](https://github.com/TeamSOBITS/sobit_pro) | [Go to Git](https://github.com/TeamSOBITS/sobit_edu) | [Go to Git](https://github.com/TeamSOBITS/sobit_mini) |
 
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-<!-- セットアップ -->
-## セットアップ
+<!-- GETTING STARTED -->
+## Getting Started
 
-ここで，本レポジトリのセットアップ方法について説明します．
+Here you will find out instructions on setting up this project locally.
 
-### 環境条件
+### Prerequisites
 
-正常動作のため，以下の必要な環境を整えてください．
+Please, make sure to prepare the following environment in order to achieve normal operation of this repository.
 
 | System  | Version |
 | ------------- | ------------- |
@@ -66,71 +66,74 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
 | ROS | Noetic Ninjemys |
 | Python | 3.0~ |
 
+### Installation
 
-### インストール方法
-
-1. ROSの`src`フォルダに移動します．
+1. Go to the `src` folder of ROS.
    ```sh
    $ roscd
-   # roscdは設定によって"cd ~/catkin_ws/"のコマンドと同様
+   # roscd is the same as the command "cd ~/catkin_ws/" depending on your configuration
    $ cd src/
    ```
 
-2. 本レポジトリをcloneします．
+2. Clone this repository.
    ```sh
    $ git clone https://github.com/TeamSOBITS/sobit_common
    ```
-3. レポジトリの中へ移動します．
+3. Navigate into the repository.
    ```sh
    $ cd sobit_common/
    ```
-4. 依存パッケージをインストールします．ただし，移動機構によって`kobuki`か`custom`かが選択できます．
+4. Install the dependent packages. Depending on the mobile base of your robot, you can choose between `kobuki` and `custom`.
    ```sh
    $ bash install.sh --kobuki
    ```
-5. パッケージをコンパイルします．
+5. Compile the package.
    ```sh
    $ roscd
    $ catkin_make
    ```
 
 > [!IMPORTANT]  
-> If you will use SOBIT PRO, please select `custom`. If you will use SOBIT EDU or SOBIT MINI, then select `kobuki`.
-
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+> SOBIT PROを使用する場合は，`custom`を選択してください．SOBIT EDUまたはSOBIT MINIを使用する場合は，`kobuki`を選択してください．
 
 
-
-<!-- 実行・操作方法 -->
-## 実行・操作方法
-本レポジトリは共通ライブラリのため，実行すべきプログラムがありません．
-
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-<!-- マイルストーン -->
-## マイルストーン
+<!-- LAUNCH AND USAGE EXAMPLES -->
+## Launch and Usage
 
-- [ ] ドキュメンテーションの充実 
-- [ ] OSS化
-    - [ ] PCL関係のライブラリをYOLOレポジトリへ移行
-    - [ ] HSRの依存パッケージの分離
-    - [ ] カスタムmsgの更新
+This repository is a common library, so there are no programs to run.
 
-現時点のbugや新規機能の依頼を確認するために[Issueページ][issues-url] をご覧ください．
 
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-<!-- 変更履歴 -->
-## 変更履歴
+<!-- MILESTONE -->
+## Milestone
+
+- [ ] Improve documentation 
+- [ ] OSS Conversion
+    - [ ] Migrate PCL-related libraries to YOLO repository
+    - [ ] Isolation of HSR dependency packages
+    - [ ] Update custom messages
+
+See the [open issues][issues-url] for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
+<!-- CHANGE-LOG -->
+## Change-Log
 
 - 1.0: OSS (2023-11-06)
   - 詳細 1
   - 詳細 2
   - 詳細 3
+
 
 <!-- CONTRIBUTING -->
 <!-- ## Contributing
@@ -146,7 +149,7 @@ Don't forget to give the project a star! Thanks again!
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p> -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 
@@ -155,17 +158,17 @@ Don't forget to give the project a star! Thanks again!
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p> -->
+<p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 
-<!-- 参考文献 -->
-## 参考文献
+<!-- ACKNOWLEDGMENTS -->
+## Acknowledgments
 
 * [Dynamixel SDK e-Manual](https://emanual.robotis.com/docs/en/software/dynamixel/dynamixel_sdk/overview/)
 * [ROS Control](http://wiki.ros.org/ros_control)
 
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
