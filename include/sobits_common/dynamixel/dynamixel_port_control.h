@@ -40,8 +40,8 @@ class DynamixelPortControl : public hardware_interface::RobotHW {
         void initializeSettingParam();
         void updateSettingParam(){};
 
-        void setTorqueAll( bool torque );
         void setTorque   ( uint8_t id, bool torque );
+        void setTorqueAll( bool torque );
 
         bool setCurrentLimit   ( uint8_t id, uint16_t current_lim );
         void setVelocityLim    ( uint8_t id, uint32_t vel_lim );
@@ -59,7 +59,7 @@ class DynamixelPortControl : public hardware_interface::RobotHW {
         void readVelocity( ros::Time time, ros::Duration period );
         void readCurrent ( ros::Time time, ros::Duration period );
 
-        int  getCurrentLoad( int id );
+        int  getCurrentLoad( uint8_t id );
 
         std::vector<dynamixel_control::DynamixelControl> joint_list_;
 
