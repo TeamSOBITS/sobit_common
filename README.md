@@ -56,6 +56,8 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
 
 ここで，本レポジトリのセットアップ方法について説明します．
 
+<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+
 ### 環境条件
 
 正常動作のため，以下の必要な環境を整えてください．
@@ -66,6 +68,9 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
 | ROS | Noetic Ninjemys |
 | Python | 3.0~ |
 
+> [!INFO]
+> `Ubuntu`や`ROS`のインストール方法に関しては，[SOBIT Manual](https://github.com/TeamSOBITS/sobits_manual#%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)に参照してください．
+<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 ### インストール方法
 
@@ -75,7 +80,6 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
    # roscdは設定によって"cd ~/catkin_ws/"のコマンドと同様
    $ cd src/
    ```
-
 2. 本レポジトリをcloneします．
    ```sh
    $ git clone https://github.com/TeamSOBITS/sobit_common
@@ -131,6 +135,8 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
   - 詳細 1
   - 詳細 2
   - 詳細 3
+
+<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 <!-- CONTRIBUTING -->
 <!-- ## Contributing

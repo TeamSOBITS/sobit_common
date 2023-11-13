@@ -56,6 +56,8 @@ The robots that require SOBIT Common are listed here.
 
 Here you will find out instructions on setting up this project locally.
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ### Prerequisites
 
 Please, make sure to prepare the following environment in order to achieve normal operation of this repository.
@@ -65,6 +67,10 @@ Please, make sure to prepare the following environment in order to achieve norma
 | Ubuntu | 20.04 (Focal Fossa) |
 | ROS | Noetic Ninjemys |
 | Python | 3.0~ |
+
+> [!INFO]
+> If you want to know more about the `Ubuntu` or `ROS` installation, please check the [SOBIT Manual](https://github.com/TeamSOBITS/sobits_manual#%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6) for more information.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Installation
 
@@ -96,7 +102,6 @@ Please, make sure to prepare the following environment in order to achieve norma
 > [!IMPORTANT]  
 > SOBIT PROを使用する場合は，`custom`を選択してください．SOBIT EDUまたはSOBIT MINIを使用する場合は，`kobuki`を選択してください．
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -105,7 +110,6 @@ Please, make sure to prepare the following environment in order to achieve norma
 ## Launch and Usage
 
 This repository is a common library, so there are no programs to run.
-
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -133,6 +137,8 @@ See the [open issues][issues-url] for a full list of proposed features (and know
   - 詳細 1
   - 詳細 2
   - 詳細 3
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- CONTRIBUTING -->
