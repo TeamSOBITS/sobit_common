@@ -1,9 +1,9 @@
-#include <iostream>
+// #include <iostream>
 
 #include "sobits_common/dynamixel/dynamixel_port_control.h"
 
 namespace dynamixel_port_control {
-DynamixelPortControl::DynamixelPortControl(ros::NodeHandle nh, dynamixel_setting::DynamixelSetting &setting) {
+DynamixelPortControl::DynamixelPortControl( ros::NodeHandle nh, dynamixel_setting::DynamixelSetting &setting ){
     pub_current_ = nh.advertise<sobits_msgs::current_state_array>("/current_state_array", 100);
     dxl_res_     = true;
     joint_num_   = setting.getJointNum();
@@ -85,7 +85,7 @@ DynamixelPortControl::DynamixelPortControl(ros::NodeHandle nh, dynamixel_setting
     registerInterface(&jnt_limit_interface_);
 }
 
-bool DynamixelPortControl::read(ros::Time time, ros::Duration period) {
+bool DynamixelPortControl::read( ros::Time time, ros::Duration period ){
   // read_status
     dxl_res_            = true;
     int dxl_comm_result = read_status_group_->txRxPacket();
@@ -104,7 +104,7 @@ bool DynamixelPortControl::read(ros::Time time, ros::Duration period) {
     return true;
 }
 
-void DynamixelPortControl::readPosition(ros::Time time, ros::Duration period) {
+void DynamixelPortControl::readPosition( ros::Time time, ros::Duration period ){
     for (int i = 0; i < joint_num_; i++) {
         uint8_t dxl_id             = joint_list_[i].getDxlId();
         bool    dxl_getdata_result = read_status_group_->isAvailable(dxl_id,
@@ -122,7 +122,7 @@ void DynamixelPortControl::readPosition(ros::Time time, ros::Duration period) {
     }
 }
 
-void DynamixelPortControl::readVelocity(ros::Time time, ros::Duration period) {
+void DynamixelPortControl::readVelocity( ros::Time time, ros::Duration period ){
     for (int i = 0; i < joint_num_; i++) {
         uint8_t dxl_id             = joint_list_[i].getDxlId();
         bool    dxl_getdata_result = read_status_group_->isAvailable(dxl_id,
@@ -140,7 +140,7 @@ void DynamixelPortControl::readVelocity(ros::Time time, ros::Duration period) {
     }
 }
 
-void DynamixelPortControl::readCurrent(ros::Time time, ros::Duration period) {
+void DynamixelPortControl::readCurrent( ros::Time time, ros::Duration period ){
     sobits_msgs::current_state_array current_state_array;
 
     for (int i = 0; i < joint_num_; i++) {
@@ -168,7 +168,7 @@ void DynamixelPortControl::readCurrent(ros::Time time, ros::Duration period) {
     pub_current_.publish(current_state_array);
 }
 
-void DynamixelPortControl::write(ros::Time time, ros::Duration period) {
+void DynamixelPortControl::write( ros::Time time, ros::Duration period ){
     // write position
     for (int i = 0; i < joint_num_; i++) {
         uint8_t                             dxl_id = joint_list_[i].getDxlId();
@@ -206,7 +206,7 @@ void DynamixelPortControl::write(ros::Time time, ros::Duration period) {
     write_position_group_->clearParam();
 }
 
-void DynamixelPortControl::setTorque(uint8_t id, bool torque) {
+void DynamixelPortControl::setTorque( uint8_t id, bool torque ){
     uint8_t mode            = torque ? dynamixel_control::TORQUE_ENABLE : dynamixel_control::TORQUE_DISABLE;
     uint8_t dxl_error       = 0;
     int     dxl_comm_result = packet_handler_->write1ByteTxRx(port_handler_,
@@ -224,14 +224,14 @@ void DynamixelPortControl::setTorque(uint8_t id, bool torque) {
     }
 }
 
-void DynamixelPortControl::setTorqueAll(bool torque) {
+void DynamixelPortControl::setTorqueAll( bool torque ){
     for (int i = 0; i < joint_num_; i++) {
         joint_list_[i].setTorque(torque);
         setTorque(joint_list_[i].getDxlId(), torque);
     }
 }
 
-void DynamixelPortControl::setVelocityLim(uint8_t id, uint32_t vel_lim) {
+void DynamixelPortControl::setVelocityLim( uint8_t id, uint32_t vel_lim ){
     uint8_t dxl_error       = 0;
     int     dxl_comm_result = packet_handler_->write4ByteTxRx(
         port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_PROFILE_VELOCITY].address, vel_lim, &dxl_error);
@@ -243,7 +243,7 @@ void DynamixelPortControl::setVelocityLim(uint8_t id, uint32_t vel_lim) {
     }
 }
 
-void DynamixelPortControl::setAccelerationLim(uint8_t id, uint32_t acc_lim) {
+void DynamixelPortControl::setAccelerationLim( uint8_t id, uint32_t acc_lim ){
     uint8_t dxl_error       = 0;
     int     dxl_comm_result = packet_handler_->write4ByteTxRx(
         port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_PROFILE_ACCELERATION].address, acc_lim, &dxl_error);
@@ -255,7 +255,7 @@ void DynamixelPortControl::setAccelerationLim(uint8_t id, uint32_t acc_lim) {
     }
 }
 
-void DynamixelPortControl::setPositionDGain(uint8_t id, uint16_t d_gain) {
+void DynamixelPortControl::setPositionDGain( uint8_t id, uint16_t d_gain ){
     uint8_t dxl_error       = 0;
     int     dxl_comm_result = packet_handler_->write2ByteTxRx(
         port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_POSITION_D_GAIN].address, d_gain, &dxl_error);
@@ -267,7 +267,7 @@ void DynamixelPortControl::setPositionDGain(uint8_t id, uint16_t d_gain) {
     }
 }
 
-void DynamixelPortControl::setPositionIGain(uint8_t id, uint16_t i_gain) {
+void DynamixelPortControl::setPositionIGain( uint8_t id, uint16_t i_gain ){
     uint8_t dxl_error       = 0;
     int     dxl_comm_result = packet_handler_->write2ByteTxRx(
         port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_POSITION_I_GAIN].address, i_gain, &dxl_error);
@@ -279,7 +279,7 @@ void DynamixelPortControl::setPositionIGain(uint8_t id, uint16_t i_gain) {
     }
 }
 
-void DynamixelPortControl::setPositionPGain(uint8_t id, uint16_t p_gain) {
+void DynamixelPortControl::setPositionPGain( uint8_t id, uint16_t p_gain ){
     uint8_t dxl_error       = 0;
     int     dxl_comm_result = packet_handler_->write2ByteTxRx(
         port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_POSITION_P_GAIN].address, p_gain, &dxl_error);
@@ -291,7 +291,7 @@ void DynamixelPortControl::setPositionPGain(uint8_t id, uint16_t p_gain) {
     }
 }
 
-bool DynamixelPortControl::setCurrentLimit(uint8_t id, uint16_t current_lim) {
+bool DynamixelPortControl::setCurrentLimit( uint8_t id, uint16_t current_lim ){
     if (!dxl_res_) {
         return false;
     }
@@ -308,7 +308,7 @@ bool DynamixelPortControl::setCurrentLimit(uint8_t id, uint16_t current_lim) {
     return true;
 }
 
-void DynamixelPortControl::setOperationMode(uint8_t id, uint8_t mode) {
+void DynamixelPortControl::setOperationMode( uint8_t id, uint8_t mode ){
     uint8_t dxl_error       = 0;
     int     dxl_comm_result = packet_handler_->write1ByteTxRx(
         port_handler_, id, dynamixel_control::DYNAMIXEL_REG_TABLE[dynamixel_control::TABLE_ID_OPE_MODE].address, mode, &dxl_error);
@@ -320,7 +320,7 @@ void DynamixelPortControl::setOperationMode(uint8_t id, uint8_t mode) {
     }
 }
 
-void DynamixelPortControl::initializeSettingParam() {
+void DynamixelPortControl::initializeSettingParam(){
     for (int i = 0; i < joint_num_; i++) {
         setAccelerationLim(joint_list_[i].getDxlId(), joint_list_[i].getDxlAccelerationLim());
         setVelocityLim(joint_list_[i].getDxlId(), joint_list_[i].getDxlVelocityLim());
@@ -335,7 +335,7 @@ void DynamixelPortControl::initializeSettingParam() {
     }
 }
 
-bool DynamixelPortControl::startUpPosition() {
+bool DynamixelPortControl::startUpPosition(){
     setTorqueAll(true);
     ros::Rate                   rate(10);
     int                         step_max = 60;
@@ -393,7 +393,7 @@ bool DynamixelPortControl::startUpPosition() {
 }
 
 // Debug
-int DynamixelPortControl::getCurrentLoad(int id) {
+int DynamixelPortControl::getCurrentLoad( int id ){
     uint8_t  dxl_error = 0;
     uint16_t dxl_current;
     int      dxl_comm_result = packet_handler_->read2ByteTxRx(

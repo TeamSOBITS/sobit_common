@@ -1,35 +1,28 @@
 #include "sobits_common/dynamixel/dynamixel_setting.h"
 #include "sobits_common/dynamixel/dynamixel_joint_control.h"
 
-namespace dynamixel_setting {
-DynamixelSetting::DynamixelSetting(ros::NodeHandle nh) {
+namespace dynamixel_setting{
+DynamixelSetting::DynamixelSetting(ros::NodeHandle nh){
     nh_        = nh;
     joint_num_ = 0;
     port_name_ = "";
     joint_list_.clear();
 }
 
-bool DynamixelSetting::load() {
-    if (!loadPortName()) {
-        return false;
-    }
-    if (!loadBaudRate()) {
-        return false;
-    }
-    if (!loadJointList()) {
-        return false;
-    }
-    if (!loadJointParam()) {
-        return false;
-    }
+bool DynamixelSetting::load(){
+    if( !loadPortName() )   return false;
+    if( !loadBaudRate() )   return false;
+    if( !loadJointList() )  return false;
+    if( !loadJointParam() ) return false;
+
     return true;
 }
 
-bool DynamixelSetting::loadPortName() {
+bool DynamixelSetting::loadPortName(){
     std::string key_port_name = KEY_DXL_PORT + KEY_PORT_NAME;
     std::string port_name;
 
-    if (!nh_.getParam(key_port_name, port_name)) {
+    if( !nh_.getParam(key_port_name, port_name) ){
         ROS_ERROR("Undefined key %s.", key_port_name.c_str());
         return false;
     }
@@ -39,11 +32,11 @@ bool DynamixelSetting::loadPortName() {
     return true;
 }
 
-bool DynamixelSetting::loadBaudRate() {
+bool DynamixelSetting::loadBaudRate(){
     std::string key_baud_rate = KEY_DXL_PORT + KEY_BAUDARTE;
     int         baud_rate;
 
-    if (!nh_.getParam(key_baud_rate, baud_rate)) {
+    if( !nh_.getParam(key_baud_rate, baud_rate) ){
         ROS_ERROR("Undefined key %s.", key_baud_rate.c_str());
 
         return false;
@@ -54,26 +47,29 @@ bool DynamixelSetting::loadBaudRate() {
     return true;
 }
 
-bool DynamixelSetting::loadJointList() {
+bool DynamixelSetting::loadJointList(){
     std::string         key_joint_list = KEY_DXL_PORT + KEY_JOINTS;
     XmlRpc::XmlRpcValue load_joints;
 
-    if (!nh_.getParam(key_joint_list, load_joints)) {
+    if( !nh_.getParam(key_joint_list, load_joints) ){
         ROS_ERROR("Undefined key %s.", key_joint_list.c_str());
 
         return false;
     }
-    if (load_joints.getType() != XmlRpc::XmlRpcValue::TypeArray) {
+
+    if( load_joints.getType() != XmlRpc::XmlRpcValue::TypeArray ){
         ROS_ERROR("XmlRpc get type error! func: %s, line%d", __func__, __LINE__);
 
         return false;
     }
-    for (int32_t i = 0; i < load_joints.size(); i++) {
-        if (load_joints[i].getType() != XmlRpc::XmlRpcValue::TypeString) {
+
+    for( int i = 0; i < load_joints.size(); i++ ){
+        if( load_joints[i].getType() != XmlRpc::XmlRpcValue::TypeString ){
             ROS_ERROR("XmlRpc get type error! func: %s, line%d.", __func__, __LINE__);
 
             return false;
         }
+
         DxlSettingParam work;
         work.name = (std::string)load_joints[i];
         joint_list_.push_back(work);
@@ -84,11 +80,11 @@ bool DynamixelSetting::loadJointList() {
     return true;
 }
 
-bool DynamixelSetting::loadJointParam() {
+bool DynamixelSetting::loadJointParam(){
     std::string         key_base_param = KEY_DXL_PORT + "/";
     XmlRpc::XmlRpcValue load_joint_param;
 
-    for (int8_t i = 0; i < joint_list_.size(); i++) {
+    for( int i = 0; i < joint_list_.size(); i++ ){
         std::string key_joint_param = key_base_param + joint_list_[i].name;
         int         load_id;
         int         load_center;
@@ -102,59 +98,70 @@ bool DynamixelSetting::loadJointParam() {
         int         load_pos_p_gain;
         double      gear_ratio = 1;
         
-        if (!nh_.getParam(key_joint_param + KEY_JOINTS_ID, load_id)) {
+        if( !nh_.getParam(key_joint_param + KEY_JOINTS_ID, load_id) ){
             ROS_ERROR("%s", (key_joint_param + KEY_JOINTS_ID).c_str());
             ROS_ERROR("Undefined %s id key func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_JOINTS_CENTER, load_center)) {
+        if( !nh_.getParam(key_joint_param + KEY_JOINTS_CENTER, load_center) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_JOINTS_CENTER).c_str());
             ROS_ERROR("Undefined %s center func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_JOINTS_HOME, load_home)) {
+        if( !nh_.getParam(key_joint_param + KEY_JOINTS_HOME, load_home) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_JOINTS_HOME).c_str());
             ROS_ERROR("Undefined %s home func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_JOINTS_MODE, load_mode)) {
+        if( !nh_.getParam(key_joint_param + KEY_JOINTS_MODE, load_mode) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_JOINTS_MODE).c_str());
             ROS_ERROR("Undefined %s mode func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_JOINTS_VEL, load_vel)) {
+        if( !nh_.getParam(key_joint_param + KEY_JOINTS_VEL, load_vel) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_JOINTS_VEL).c_str());
             ROS_ERROR("Undefined %s vel func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_JOINTS_ACC, load_acc)) {
+        if( !nh_.getParam(key_joint_param + KEY_JOINTS_ACC, load_acc) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_JOINTS_ACC).c_str());
             ROS_ERROR("Undefined %s acc func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_POSITION_D_GAIN, load_pos_d_gain)) {
+        if( !nh_.getParam(key_joint_param + KEY_POSITION_D_GAIN, load_pos_d_gain) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_POSITION_D_GAIN).c_str());
             ROS_ERROR("Undefined %s d_gain func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_POSITION_I_GAIN, load_pos_i_gain)) {
+        if( !nh_.getParam(key_joint_param + KEY_POSITION_I_GAIN, load_pos_i_gain) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_POSITION_I_GAIN).c_str());
             ROS_ERROR("Undefined %s i_gain func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_POSITION_P_GAIN, load_pos_p_gain)) {
+        if( !nh_.getParam(key_joint_param + KEY_POSITION_P_GAIN, load_pos_p_gain) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_POSITION_P_GAIN).c_str());
             ROS_ERROR("Undefined %s p_gain func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (!nh_.getParam(key_joint_param + KEY_GEAR_RATIO, gear_ratio)) {
+        if( !nh_.getParam(key_joint_param + KEY_GEAR_RATIO, gear_ratio) ){
+            ROS_ERROR("%s", (key_joint_param + KEY_GEAR_RATIO).c_str());
             ROS_ERROR("Undefined %s gear_ration func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
             return false;
         }
-        if (load_mode == dynamixel_control::OPERATING_MODE_CURR_POS) {
-            if (!nh_.getParam(key_joint_param + KEY_JOINTS_LIM, load_lim)) {
+
+        if( load_mode == dynamixel_control::OPERATING_MODE_CURR_POS ){
+            if( !nh_.getParam(key_joint_param + KEY_JOINTS_LIM, load_lim) ){
+                ROS_ERROR("%s", (key_joint_param + KEY_JOINTS_LIM).c_str());
                 ROS_ERROR("Undefined %s limi func: %s, line%d.", joint_list_[i].name.c_str(), __func__, __LINE__);
 
                 return false;

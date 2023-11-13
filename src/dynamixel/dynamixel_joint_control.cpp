@@ -1,18 +1,18 @@
 #include "sobits_common/dynamixel/dynamixel_joint_control.h"
 
 namespace dynamixel_control {
-DynamixelControl::DynamixelControl(std::string name,
-                                   uint8_t     dxl_id,
-                                   int32_t     center,
-                                   double      home,
-                                   uint8_t     mode,
-                                   uint32_t    dxl_vel_lim,
-                                   uint32_t    dxl_acc_lim,
-                                   uint16_t    dxl_current_lim,
-                                   uint16_t    dxl_pos_d_gain,
-                                   uint16_t    dxl_pos_i_gain,
-                                   uint16_t    dxl_pos_p_gain,
-                                   double      gear_ratio) {
+DynamixelControl::DynamixelControl( std::string name,
+                                    uint8_t     dxl_id,
+                                    int32_t     center,
+                                    double      home,
+                                    uint8_t     mode,
+                                    uint32_t    dxl_vel_lim,
+                                    uint32_t    dxl_acc_lim,
+                                    uint16_t    dxl_current_lim,
+                                    uint16_t    dxl_pos_d_gain,
+                                    uint16_t    dxl_pos_i_gain,
+                                    uint16_t    dxl_pos_p_gain,
+                                    double      gear_ratio) {
     name_            = name;
     id_              = dxl_id;
     pos_             = 0.0;
