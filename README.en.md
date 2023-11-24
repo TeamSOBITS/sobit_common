@@ -66,7 +66,6 @@ Please, make sure to prepare the following environment in order to achieve norma
 | ------------- | ------------- |
 | Ubuntu | 20.04 (Focal Fossa) |
 | ROS | Noetic Ninjemys |
-| Python | 3.0~ |
 
 > [!INFO]
 > If you want to know more about the `Ubuntu` or `ROS` installation, please check the [SOBIT Manual](https://github.com/TeamSOBITS/sobits_manual#%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6) for more information.
@@ -89,18 +88,15 @@ Please, make sure to prepare the following environment in order to achieve norma
    ```sh
    $ cd sobit_common/
    ```
-4. Install the dependent packages. Depending on the mobile base of your robot, you can choose between `kobuki` and `custom`.
+4. Install the dependent packages.
    ```sh
-   $ bash install.sh --kobuki
+   $ bash install.sh
    ```
 5. Compile the package.
    ```sh
    $ roscd
    $ catkin_make
    ```
-
-> [!IMPORTANT]  
-> SOBIT PROを使用する場合は，`custom`を選択してください．SOBIT EDUまたはSOBIT MINIを使用する場合は，`kobuki`を選択してください．
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -125,18 +121,6 @@ This repository is a common library, so there are no programs to run.
     - [ ] Update custom messages
 
 See the [open issues][issues-url] for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CHANGE-LOG -->
-## Change-Log
-
-- 1.0: OSS (2023-11-06)
-  - 詳細 1
-  - 詳細 2
-  - 詳細 3
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

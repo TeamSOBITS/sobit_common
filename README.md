@@ -26,7 +26,6 @@
     </li>
     <li><a href="#実行・操作方法">実行・操作方法</a></li>
     <li><a href="#マイルストーン">マイルストーン</a></li>
-    <li><a href="#変更履歴">変更履歴</a></li>
     <!-- <li><a href="#contributing">Contributing</a></li> -->
     <!-- <li><a href="#license">License</a></li> -->
     <li><a href="#参考文献">参考文献</a></li>
@@ -66,7 +65,6 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
 | ------------- | ------------- |
 | Ubuntu | 20.04 (Focal Fossa) |
 | ROS | Noetic Ninjemys |
-| Python | 3.0~ |
 
 > [!INFO]
 > `Ubuntu`や`ROS`のインストール方法に関しては，[SOBIT Manual](https://github.com/TeamSOBITS/sobits_manual#%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)に参照してください．
@@ -88,18 +86,15 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
    ```sh
    $ cd sobit_common/
    ```
-4. 依存パッケージをインストールします．ただし，移動機構によって`kobuki`か`custom`かが選択できます．
+4. 依存パッケージをインストールします．
    ```sh
-   $ bash install.sh --kobuki
+   $ bash install.sh
    ```
 5. パッケージをコンパイルします．
    ```sh
    $ roscd
    $ catkin_make
    ```
-
-> [!IMPORTANT]  
-> If you will use SOBIT PRO, please select `custom`. If you will use SOBIT EDU or SOBIT MINI, then select `kobuki`.
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
@@ -126,17 +121,6 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
-
-
-<!-- 変更履歴 -->
-## 変更履歴
-
-- 1.0: OSS (2023-11-06)
-  - 詳細 1
-  - 詳細 2
-  - 詳細 3
-
-<p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 <!-- CONTRIBUTING -->
 <!-- ## Contributing
