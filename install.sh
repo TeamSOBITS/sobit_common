@@ -1,48 +1,41 @@
 #!/bin/bash
 
-# Select mobile base version
-MOBILE_BASE_LIST=("kobuki" "custom")
-MOBILE_BASE=$1
-MOBILE_BASE=${MOBILE_BASE//-}
+echo "╔══╣ Install: SOBITS Common with $MOBILE_BASE mobile base (STARTING) ╠══╗"
 
 
-# Check if the mobile base is selected
-if [[ "${MOBILE_BASE_LIST[*]}" =~ (^|[[:space:]])"${MOBILE_BASE}"($|[[:space:]]) ]]; then
-    echo "╔══╣ Install: SOBITS Common with $MOBILE_BASE mobile base (STARTING) ╠══╗"
+# Keep track of the current directory
+CURRENT_DIR=`pwd`
+cd ..
 
-else
-    echo "Please select one of the following mobile bases:"
-    echo ${MOBILE_BASE_LIST[*]}
-    echo "For example: bash install.sh --kobuki"
-    exit
-fi
+# Dowload required packages for SOBIT PRO
+ros_packages=(
+    "DynamixelSDK" \
+    "sobits_msgs"
+)
 
+# Clone all packages
+for ((i = 0; i < ${#ros_packages[@]}; i++)) {
+    echo "Clonning: ${ros_packages[i]}"
+    git clone https://github.com/TeamSOBITS/${ros_packages[i]}.git
 
-# Download and install dependencies
+    # Check if install.sh exists in each package
+    if [ -f ${ros_packages[i]}/install.sh ]; then
+        echo "Running install.sh in ${ros_packages[i]}."
+        cd ${ros_packages[i]}
+        bash install.sh
+        cd ..
+    fi
+}
+
+# Go back to previous directory
+cd ${CURRENT_DIR}
+
+# Download ROS dependencies
 sudo apt-get update
 sudo apt-get install -y \
     ros-${ROS_DISTRO}-controller-manager \
-    ros-${ROS_DISTRO}-hardware-interface \
-    ros-${ROS_DISTRO}-joint-limits-interface
-
-# Install DynamixelSDK
-cd ../
-sudo rm -r DynamixelSDK
-git clone -b noetic-devel https://github.com/TeamSOBITS/DynamixelSDK
-
-if [[ "${MOBILE_BASE}" == "kobuki" ]]; then
-    # Install TurtleBot2
-    sudo rm -r turtlebot2_on_noetic
-    git clone https://github.com/TeamSOBITS/turtlebot2_on_noetic
-    cd turtlebot2_on_noetic
-    bash install.sh
-    cd ../
-
-    # Link Kobuki library with gazebo (not necessary?)
-    # sudo cp ~/catkin_ws/src/sobit_common/turtlebot2_on_noetic/turtlebot_simulator/turtlebot_gazebo/libgazebo_ros_kobuki.so /opt/ros/${ROS_DISTRO}/lib
-fi
-
-cd sobits_common/
+    ros-${ROS_DISTRO}-joint-limits-interface \
+    ros-${ROS_DISTRO}-hardware-interface
 
 
 echo "╚══╣ Install: SOBITS Common (FINISHED) ╠══╝"
