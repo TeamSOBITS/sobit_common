@@ -8,7 +8,7 @@
 [![Issues][issues-shield]][issues-url]
 [![License][license-shield]][license-url]
 
-# SOBIT Common
+# SOBITS Common
 
 <!-- 目次 -->
 <details>
@@ -24,7 +24,7 @@
         <li><a href="#インストール方法">インストール方法</a></li>
       </ul>
     </li>
-    <li><a href="#実行・操作方法">実行・操作方法</a></li>
+    <li><a href="#実行操作方法">実行・操作方法</a></li>
     <li><a href="#マイルストーン">マイルストーン</a></li>
     <!-- <li><a href="#contributing">Contributing</a></li> -->
     <!-- <li><a href="#license">License</a></li> -->
@@ -37,17 +37,16 @@
 <!-- レポジトリの概要 -->
 ## 概要
 
-SOBIT Commonのレポジトリでは、SOBITSがこれまで開発してきた実機ロボットを動かすため，共通のライブラリです．
-ロボットに搭載されているアクチュエータやセンサーなど共通で使用するリソースを統一し，ライブラリ化となったものです．
+SOBITS Commonのレポジトリでは、SOBITSがこれまで開発してきた実機ロボットを動かすため，共通のライブラリです．ロボットに搭載されているアクチュエータやセンサーなど共通で使用するリソースを統一し，ライブラリ化となったものです．
 
-SOBIT Commonが必要とされるSOBITSのロボットはこちらになります．
+SOBITS Commonが必要とされるSOBITSのロボットはこちらになります．
+
 | SOBIT PRO | SOBIT EDU | SOBIT MINI |
 | :---: | :---: | :---: |
-| ![](docs/img/sobit_pro.png) | ![](docs/img/sobit_edu.png) | ![](docs/img/sobit_mini.png) | 
+| ![SOBIT PRO](docs/img/sobit_pro.png) | ![SOBIT EDU](docs/img/sobit_edu.png) | ![SOBIT MINI](docs/img/sobit_mini.png) | 
 | [Gitへ移動](https://github.com/TeamSOBITS/sobit_pro) | [Gitへ移動](https://github.com/TeamSOBITS/sobit_edu) | [Gitへ移動](https://github.com/TeamSOBITS/sobit_mini) |
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
-
 
 
 <!-- セットアップ -->
@@ -68,7 +67,9 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
 
 > [!INFO]
 > `Ubuntu`や`ROS`のインストール方法に関しては，[SOBIT Manual](https://github.com/TeamSOBITS/sobits_manual#%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6)に参照してください．
+
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
+
 
 ### インストール方法
 
@@ -80,11 +81,11 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
    ```
 2. 本レポジトリをcloneします．
    ```sh
-   $ git clone https://github.com/TeamSOBITS/sobit_common
+   $ git clone https://github.com/TeamSOBITS/sobits_common
    ```
 3. レポジトリの中へ移動します．
    ```sh
-   $ cd sobit_common/
+   $ cd sobits_common/
    ```
 4. 依存パッケージをインストールします．
    ```sh
@@ -99,7 +100,6 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 
-
 <!-- 実行・操作方法 -->
 ## 実行・操作方法
 本レポジトリは共通ライブラリのため，実行すべきプログラムがありません．
@@ -107,14 +107,13 @@ SOBIT Commonが必要とされるSOBITSのロボットはこちらになりま�
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p>
 
 
-
 <!-- マイルストーン -->
 ## マイルストーン
 
-- [ ] ドキュメンテーションの充実 
-- [ ] OSS化
-    - [ ] PCL関係のライブラリをYOLOレポジトリへ移行
-    - [ ] HSRの依存パッケージの分離
+- [x] OSS
+    - [x] PCL関係のライブラリをYOLOレポジトリへ移行
+    - [x] HSRの依存パッケージの分離
+    - [x] ドキュメンテーションの充実 
     - [ ] カスタムmsgの更新
 
 現時点のbugや新規機能の依頼を確認するために[Issueページ][issues-url] をご覧ください．
@@ -139,14 +138,12 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p> -->
 
 
-
 <!-- LICENSE -->
 <!-- ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">上に戻る</a>)</p> -->
-
 
 
 <!-- 参考文献 -->
@@ -170,4 +167,4 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [issues-shield]: https://img.shields.io/github/issues/TeamSOBITS/sobit_common.svg?style=for-the-badge
 [issues-url]: https://github.com/TeamSOBITS/sobit_common/issues
 [license-shield]: https://img.shields.io/github/license/TeamSOBITS/sobit_common.svg?style=for-the-badge
-[license-url]: https://github.com/TeamSOBITS/sobit_common/blob/master/LICENSE
+[license-url]: LICENSE

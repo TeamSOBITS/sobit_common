@@ -8,7 +8,7 @@
 [![Issues][issues-shield]][issues-url]
 [![License][license-shield]][license-url]
 
-# Repository Title
+# SOBITS Common
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -37,18 +37,16 @@
 <!-- INTRODUCTION -->
 ## Introduction
 
-The SOBIT Common repository is a common library for operating robots developed by SOBITS.
-In this library you will be able to collect information about the actuators and sensors mounted on these robots.
+The SOBITS Common repository is a common library for operating robots developed by SOBITS. In this library you will be able to collect information about the actuators and sensors mounted on these robots.
 
-The robots that require SOBIT Common are listed here.
+The robots that require SOBITS Common are listed here.
 
 | SOBIT PRO | SOBIT EDU | SOBIT MINI |
 | :---: | :---: | :---: |
-| ![](docs/img/sobit_pro.png) | ![](docs/img/sobit_edu.png) | ![](docs/img/sobit_mini.png) | 
+| ![SOBIT PRO](docs/img/sobit_pro.png) | ![SOBIT EDU](docs/img/sobit_edu.png) | ![SOBIT MINI](docs/img/sobit_mini.png) | 
 | [Go to Git](https://github.com/TeamSOBITS/sobit_pro) | [Go to Git](https://github.com/TeamSOBITS/sobit_edu) | [Go to Git](https://github.com/TeamSOBITS/sobit_mini) |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- GETTING STARTED -->
@@ -60,7 +58,7 @@ Here you will find out instructions on setting up this project locally.
 
 ### Prerequisites
 
-Please, make sure to prepare the following environment in order to achieve normal operation of this repository.
+First, please set up the following environment before proceeding to the next installation stage.
 
 | System  | Version |
 | ------------- | ------------- |
@@ -68,25 +66,27 @@ Please, make sure to prepare the following environment in order to achieve norma
 | ROS | Noetic Ninjemys |
 
 > [!INFO]
-> If you want to know more about the `Ubuntu` or `ROS` installation, please check the [SOBIT Manual](https://github.com/TeamSOBITS/sobits_manual#%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6) for more information.
+> If you need to install `Ubuntu` or `ROS`, please check our [SOBIT Manual](https://github.com/TeamSOBITS/sobits_manual#%E9%96%8B%E7%99%BA%E7%92%B0%E5%A2%83%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6).
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 ### Installation
 
 1. Go to the `src` folder of ROS.
    ```sh
    $ roscd
-   # roscd is the same as the command "cd ~/catkin_ws/" depending on your configuration
+   # Or just use "cd ~/catkin_ws/" and change directory.
    $ cd src/
    ```
 
 2. Clone this repository.
    ```sh
-   $ git clone https://github.com/TeamSOBITS/sobit_common
+   $ git clone https://github.com/TeamSOBITS/sobits_common
    ```
 3. Navigate into the repository.
    ```sh
-   $ cd sobit_common/
+   $ cd sobits_common/
    ```
 4. Install the dependent packages.
    ```sh
@@ -114,10 +114,10 @@ This repository is a common library, so there are no programs to run.
 <!-- MILESTONE -->
 ## Milestone
 
-- [ ] Improve documentation 
-- [ ] OSS Conversion
-    - [ ] Migrate PCL-related libraries to YOLO repository
-    - [ ] Isolation of HSR dependency packages
+- [x] OSS
+    - [x] Migrate PCL-related libraries to YOLO repository
+    - [x] Isolation of HSR dependency packages
+    - [x] Improve documentation 
     - [ ] Update custom messages
 
 See the [open issues][issues-url] for a full list of proposed features (and known issues).
@@ -142,14 +142,12 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
-
 <!-- LICENSE -->
 <!-- ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
-
 
 
 <!-- ACKNOWLEDGMENTS -->
@@ -173,4 +171,4 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 [issues-shield]: https://img.shields.io/github/issues/TeamSOBITS/sobit_common.svg?style=for-the-badge
 [issues-url]: https://github.com/TeamSOBITS/sobit_common/issues
 [license-shield]: https://img.shields.io/github/license/TeamSOBITS/sobit_common.svg?style=for-the-badge
-[license-url]: https://github.com/TeamSOBITS/sobit_common/blob/master/LICENSE
+[license-url]: LICENSE
